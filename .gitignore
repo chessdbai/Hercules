@@ -1,0 +1,13 @@
+**/*.idea
+**/*.DS_Store
+**/bin
+**/obj
+**/*.dll
+**/*.so
+**/*.a
+**/*.pdb
+
+**/node_modules
+**/build
+**/dist
+**/output

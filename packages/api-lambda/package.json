@@ -1,0 +1,9 @@
+{
+  "name": "@chessdb.biz/api-lambda",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "scripts/build.sh",
+    "clean": "scripts/clean.sh"
+  }
+}

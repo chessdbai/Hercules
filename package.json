@@ -1,0 +1,19 @@
+{
+  "name": "@chessdb.biz/hercules",
+  "version": "0.1.0",
+  "description": "Monorepo package for the Hercules frontend.",
+  "main": "index.js",
+  "author": "John Davis",
+  "license": "MIT",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "clean": "lerna run clean",
+    "test": "lerna run test",
+    "release": "yarn run bootstrap && yarn run build && yarn run test"
+  },
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  }
+}

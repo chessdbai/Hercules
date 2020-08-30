@@ -1,0 +1,98 @@
+{
+    "facets": {
+        "UserBucket": {
+            "facetAttributes": {
+                "createDate": {
+                    "attributeDefinition": {
+                        "attributeType": "DATETIME",
+                        "isImmutable": true
+                    },
+                    "requiredBehavior": "REQUIRED_ALWAYS"
+                }
+            },
+            "objectType": "NODE"
+        },
+        "User": {
+            "facetAttributes": {
+                "username": {
+                    "attributeDefinition": {
+                        "attributeType": "STRING",
+                        "isImmutable": true
+                    },
+                    "requiredBehavior": "REQUIRED_ALWAYS"
+                }
+            },
+            "objectType": "NODE"
+        },
+        "RepertoireLine": {
+            "facetAttributes": {
+                "name": {
+                    "attributeDefinition": {
+                        "attributeType": "STRING",
+                        "isImmutable": false,
+                        "attributeRules": {
+                            "RepertoireLineLengthRule": {
+                                "parameters": {
+                                    "min": "10",
+                                    "max": "250"
+                                },
+                                "ruleType": "STRING_LENGTH"
+                            }
+                        }
+                    },
+                    "requiredBehavior": "REQUIRED_ALWAYS"
+                },
+                "linePgn": {
+                    "attributeDefinition": {
+                        "attributeType": "STRING",
+                        "isImmutable": false,
+                        "attributeRules": {
+                            "RepertoireLinePgnLengthRule": {
+                                "parameters": {
+                                    "min": "10",
+                                    "max": "10000"
+                                },
+                                "ruleType": "STRING_LENGTH"
+                            }
+                        }
+                    },
+                    "requiredBehavior": "REQUIRED_ALWAYS"
+                }
+            },
+            "objectType": "LEAF_NODE"
+        },
+        "Folder": {
+            "facetAttributes": {
+                "username": {
+                    "attributeDefinition": {
+                        "attributeType": "STRING",
+                        "isImmutable": true
+                    },
+                    "requiredBehavior": "REQUIRED_ALWAYS"
+                }
+            },
+            "objectType": "NODE"
+        },
+        "Tag": {
+            "facetAttributes": {
+                "name": {
+                    "attributeDefinition": {
+                        "attributeType": "STRING",
+                        "isImmutable": true,
+                        "attributeRules": {
+                            "TagNameLengthRule": {
+                                "parameters": {
+                                    "min": "3",
+                                    "max": "25"
+                                },
+                                "ruleType": "STRING_LENGTH"
+                            }
+                        }
+                    },
+                    "requiredBehavior": "REQUIRED_ALWAYS"
+                }
+            },
+            "objectType": "NODE"
+        }
+    }
+}
