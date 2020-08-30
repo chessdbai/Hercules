@@ -1,6 +1,9 @@
 **/*.idea
 **/*.DS_Store
 **/bin
+!/packages/infrastructure/bin
+/packages/infrastructure/**/*.js
+/packages/infrastructure/**/*.d.ts
 **/obj
 **/*.dll
 **/*.so
