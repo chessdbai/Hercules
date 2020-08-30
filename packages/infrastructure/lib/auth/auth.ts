@@ -1,6 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import * as iam from '@aws-cdk/aws-iam';
 import * as cognito from '@aws-cdk/aws-cognito';
+import { Triggers } from './triggers';
 
 export interface AuthProps {
   replyToEmail: string,
@@ -10,6 +11,7 @@ export interface AuthProps {
 export class Auth extends cdk.Construct {
 
   readonly client : cognito.UserPoolClient;
+  readonly triggers : Triggers;
 
   readonly freeUsersPolicy: iam.ManagedPolicy;
   readonly premiumUsersPolicy: iam.ManagedPolicy;
@@ -194,6 +196,9 @@ export class Auth extends cdk.Construct {
       roleArn: staffUsersRole.roleArn,
       userPoolId: this.userPool.userPoolId
     });
+
+    this.triggers = new Triggers(this, 'Triggers', {});
+    this.userPool.addTrigger(cognito.UserPoolOperation.POST_CONFIRMATION, this.triggers.lambdaFunction);
 
     this.anonymousUsersRole = anonymousUsersRole;
     this.freeUsersRole = freeUsersRole;

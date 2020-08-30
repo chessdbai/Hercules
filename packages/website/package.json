@@ -1,12 +1,12 @@
 {
-  "name": "@chessdb.ai/website",
+  "name": "@chessdb.biz/website",
   "version": "1.0.0-alpha",
   "private": true,
   "description": "The main ChessDB.AI website.",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
     "build": "umi build",
-    "clean": "umi clean",
+    "clean": "rm -rf ./src/.umi* || true && rm -rf ./node_modules || true && rm -rf ./dist || true",
     "deploy": "npm run site && npm run gh-pages",
     "dev": "npm run start:dev",
     "gh-pages": "gh-pages -d dist",

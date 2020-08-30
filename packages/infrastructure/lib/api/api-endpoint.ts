@@ -78,9 +78,11 @@ export class ApiEndpoint extends Construct {
       requestValidator: requestValidator
     };
 
+    const healthApis = new apis.HealthApis(this, 'Health', apiProps);
     const adminApis = new apis.AdminApis(this, 'Admin', apiProps);
 
     this.methods = [
+      ...healthApis.methods,
       ...adminApis.methods
     ];
   }

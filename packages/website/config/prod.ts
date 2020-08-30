@@ -1,10 +1,10 @@
 const ProdConfig : any = {
   Auth: {
-      identityPoolId: 'us-east-2:8dd86360-99b0-494d-9650-2dd0942b0707',
+      identityPoolId: 'us-east-2:2074d0f2-a377-4fbd-8375-087a2f7768ae',
       region: 'us-east-2',
       identityPoolRegion: 'us-east-2',
-      userPoolId: 'us-east-2_vMsexvpdR',
-      userPoolWebClientId: '388j50pdnjip7r68t5341plh14',
+      userPoolId: 'us-east-2_xlADtr6e2',
+      userPoolWebClientId: '48jp093jktthd3jfi2pit4r738',
       mandatorySignIn: false,
       cookieStorage: {
           domain: '.chessdb.ai',

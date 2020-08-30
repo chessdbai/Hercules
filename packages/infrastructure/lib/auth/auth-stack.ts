@@ -28,5 +28,9 @@ export class AuthStack extends cdk.Stack {
       exportName: 'UserPoolClientId',
       value: auth.client.userPoolClientId
     });
+    new cdk.CfnOutput(this, 'IdentityPoolIdOutput', {
+      exportName: 'IdentityPoolId',
+      value: auth.identityPool.ref
+    });
   }
 }

@@ -13,6 +13,8 @@ namespace Hercules.Api.Client
     using Amazon.Runtime.Internal.Auth;
     using Hercules.Api.Client.Marshalling;
     using Hercules.Api.Model.Admin;
+    using Hercules.Api.Model.Database;
+    using Hercules.Api.Model.Health;
 
     /// <summary>
     /// The implementation of the <see cref="IHerculesApi"/> interface.
@@ -53,6 +55,26 @@ namespace Hercules.Api.Client
             options.ResponseUnmarshaller = InitializeUserResponseUnmarshaller.Instance;
             options.EndpointOperation = this.EndpointOperation;
             return await this.InvokeAsync<InitializeUserResponse>(request, options, CancellationToken.None);
+        }
+
+        /// <inheritdoc cref="IHerculesApi" />
+        public async Task<GetSessionResponse> GetSessionAsync(GetSessionRequest request)
+        {
+            var options = new InvokeOptions();
+            options.RequestMarshaller = GetSessionRequestMarshaller.Instance;
+            options.ResponseUnmarshaller = GetSessionResponseUnmarshaller.Instance;
+            options.EndpointOperation = this.EndpointOperation;
+            return await this.InvokeAsync<GetSessionResponse>(request, options, CancellationToken.None);
+        }
+
+        /// <inheritdoc cref="IHerculesApi" />
+        public async Task<NaturalSearchResponse> NaturalSearchAsync(NaturalSearchRequest request)
+        {
+            var options = new InvokeOptions();
+            options.RequestMarshaller = NaturalSearchRequestMarshaller.Instance;
+            options.ResponseUnmarshaller = NaturalSearchResponseUnmarshaller.Instance;
+            options.EndpointOperation = this.EndpointOperation;
+            return await this.InvokeAsync<NaturalSearchResponse>(request, options, CancellationToken.None);
         }
 
         /// <inheritdoc cref="AmazonServiceClient" />

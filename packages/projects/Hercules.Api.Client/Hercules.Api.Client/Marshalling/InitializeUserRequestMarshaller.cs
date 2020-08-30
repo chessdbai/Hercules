@@ -58,9 +58,9 @@ namespace Hercules.Api.Client.Marshalling
         }
 
         /// <summary>
-        /// Gets the singleton instance of this unmarshaller.
+        /// Gets the singleton instance of this marshaller.
         /// </summary>
-        /// <returns>The singleton instance of this unmarshaller.</returns>
+        /// <returns>The singleton instance of this marshaller.</returns>
         internal static InitializeUserRequestMarshaller GetInstance()
         {
             return instance;

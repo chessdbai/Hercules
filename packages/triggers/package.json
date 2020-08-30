@@ -1,9 +1,12 @@
 {
-  "name": "@zugzwang/study-api-cognito-triggers",
+  "name": "@chessdb.biz/hercules-api-triggers",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "build": "scripts/build.sh",
     "clean": "scripts/clean.sh"
+  },
+  "dependencies": {
+    "@chessdb.biz/hercules-api-client": "../projects/Hercules.Api.Client/"
   }
 }

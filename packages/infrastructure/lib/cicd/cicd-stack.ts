@@ -4,6 +4,7 @@ import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
 import * as codecommit from '@aws-cdk/aws-codecommit';
 import { HerculesAccount } from '../accounts';
+import { BuildProject } from './build-project';
 
 interface CicdStackProps extends cdk.StackProps {
   accounts: HerculesAccount[]
@@ -15,13 +16,6 @@ export class CicdStack extends cdk.Stack {
     
     const herculesRepo = new codecommit.Repository(this, 'Repo', {
       repositoryName: 'hercules'
-    });
-
-    const buildProject = new codebuild.PipelineProject(this, 'BuildProject', {
-
-    });
-    const deployProject = new codebuild.PipelineProject(this, 'DeployProject', {
-
     });
 
     const pipeline = new codepipeline.Pipeline(this, 'Pipeline', {
@@ -40,12 +34,16 @@ export class CicdStack extends cdk.Stack {
       output: sourceOutput
     }));
 
+    const buildProject = new BuildProject(this, 'BuildProject', {
+
+    });
+
     const buildOutput = new codepipeline.Artifact('buildOutput');
     const buildStage = pipeline.addStage({
       stageName: 'Build'
     });
     buildStage.addAction(new codepipeline_actions.CodeBuildAction({
-      project: buildProject,
+      project: buildProject.project,
       input: sourceOutput,
       outputs: [
         buildOutput
@@ -54,30 +52,34 @@ export class CicdStack extends cdk.Stack {
       runOrder: 1
     }));
 
+    const deployProject = new codebuild.PipelineProject(this, 'DeployProject', {
+
+    });
+
     props.accounts.forEach(acc => {
       const deployStage = pipeline.addStage({
         stageName: `${acc.stage}Deploy`
       });
       deployStage.addAction(new codepipeline_actions.CodeBuildAction({
-        project: buildProject,
+        project: deployProject,
         input: buildOutput,
         actionName: `${acc.stage}DeployCore`,
         runOrder: 1
       }));
       deployStage.addAction(new codepipeline_actions.CodeBuildAction({
-        project: buildProject,
+        project: deployProject,
         input: buildOutput,
         actionName: `${acc.stage}DeployAuth`,
         runOrder: 2
       }));
       deployStage.addAction(new codepipeline_actions.CodeBuildAction({
-        project: buildProject,
+        project: deployProject,
         input: buildOutput,
         actionName: `${acc.stage}DeployWebsite`,
         runOrder: 3
       }));
       deployStage.addAction(new codepipeline_actions.CodeBuildAction({
-        project: buildProject,
+        project: deployProject,
         input: buildOutput,
         actionName: `${acc.stage}DeployApi`,
         runOrder: 4

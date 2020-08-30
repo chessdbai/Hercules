@@ -1,0 +1,22 @@
+{
+  "name": "@chessdb.biz/hercules-api-client",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "postinstall": "pwsh ../../../scripts/NetRestore.ps1",
+    "build": "pwsh ../../../scripts/NetBuild.ps1",
+    "clean": "pwsh ../../../scripts/NetClean.ps1",
+    "test": "pwsh ../../../scripts/NetTest.ps1"
+  },
+  "dependencies": {
+    "@chessdb.biz/hercules-api-model": "../Hercules.Api.Model/"
+  },
+  "dotnet": {
+    "projects": [
+      "Hercules.Api.Client"
+    ],
+    "testProjects": [
+      "Hercules.Api.Client.Tests"
+    ]
+  }
+}

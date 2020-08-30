@@ -14,7 +14,6 @@ export class CoreStack extends cdk.Stack {
       domainName: props.domainName
     });
 
-    /*
     const apiCert = new certs.DnsValidatedCertificate(this, 'ApiCert', {
       region: 'us-east-2',
       hostedZone: publicZone,
@@ -36,15 +35,6 @@ export class CoreStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'WebsiteCertArnOutput', {
       exportName: 'WebsiteCertArn',
       value: websiteCert.certificateArn
-    });
-    */
-    new cdk.CfnOutput(this, 'ApiCertArnOutput', {
-      exportName: 'ApiCertArn',
-      value: 'arn:aws:acm:us-east-2:541249553451:certificate/3258607c-e2d6-44e4-b95d-b324fb409d44'
-    });
-    new cdk.CfnOutput(this, 'WebsiteCertArnOutput', {
-      exportName: 'WebsiteCertArn',
-      value: 'arn:aws:acm:us-east-1:541249553451:certificate/8ab84b2a-75b1-4563-9a55-807d7d16edd6'
     });
   }
 }

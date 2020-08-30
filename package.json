@@ -6,9 +6,9 @@
   "author": "John Davis",
   "license": "MIT",
   "scripts": {
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap --ignore-scripts --concurrency 1",
     "build": "lerna run build",
-    "clean": "lerna run clean",
+    "clean": "lerna run clean --parallel",
     "test": "lerna run test",
     "release": "yarn run bootstrap && yarn run build && yarn run test"
   },

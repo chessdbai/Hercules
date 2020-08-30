@@ -10,6 +10,8 @@ namespace Hercules.Api.Actions
     using System.Threading.Tasks;
     using Amazon.Lambda.Core;
     using Hercules.Api.Actions.Admin;
+    using Hercules.Api.Actions.Database;
+    using Hercules.Api.Actions.Health;
     using Hercules.Api.Clients;
     using Hercules.Api.Model.Runtime;
     using Newtonsoft.Json;
@@ -25,7 +27,9 @@ namespace Hercules.Api.Actions
         static ActionRegistry()
         {
             Handlers = new Dictionary<string, HandlerDelegate>();
+            Handlers.Add("GetSession", new HandlerDelegate(typeof(GetSessionAction)));
             Handlers.Add("InitializeUser", new HandlerDelegate(typeof(InitializeUserAction)));
+            Handlers.Add("NaturalSearch", new HandlerDelegate(typeof(NaturalSearchAction)));
             ClientCollection = new ClientCollection();
         }
 
