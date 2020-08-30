@@ -5,7 +5,7 @@
     "infrastructure": "bin/infrastructure.js"
   },
   "scripts": {
-    "build": "tsc && cdk synth",
+    "build": "tsc && cdk synth -o build",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk"
