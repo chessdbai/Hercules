@@ -17,6 +17,8 @@ phases:
       - apt-get update
       - add-apt-repository universe
       - apt-get install -y powershell
+      - echo "Installing the Lambda CLI plugin"
+      - dotnet new -i Amazon.Lambda.Templates
   build:
     commands:
       - yarn
