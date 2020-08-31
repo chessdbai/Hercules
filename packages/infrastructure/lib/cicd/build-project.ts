@@ -135,12 +135,17 @@ export class BuildProject extends cdk.Construct {
       "kms:GenerateDataKey*"
     );
     kmsPolicy.addResources(reportEncryptionKey.keyArn);
+
+    const artifactPolicy = new iam.PolicyStatement();
+    artifactPolicy.addActions('codeartifact:GetAuthorizationToken');
+    artifactPolicy.addResources('arn:aws:codeartifact:us-east-2:407299974961:domain/chessdb');
     
     const codeBuildPolicy = new iam.PolicyStatement();
     codeBuildPolicy.addActions('logs:*');
     codeBuildPolicy.addActions('cloudwatch:*');
     codeBuildPolicy.addAllResources();
 
+    buildRole.addToPolicy(artifactPolicy);
     buildRole.addToPolicy(reportingPolicy);
     buildRole.addToPolicy(bucketPolicy);
     buildRole.addToPolicy(kmsPolicy);

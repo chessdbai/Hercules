@@ -15,7 +15,7 @@ phases:
       - dotnet tool install -g Amazon.Lambda.Tools
   pre_build:
     commands:
-      - aws codeartifact login --tool npm --repository chessdb-npm --domain chessdb --domain-owner 407299974961
+      - aws codeartifact login --tool npm --repository chessdb-and-npm --domain chessdb --domain-owner 407299974961 --region us-east-2
   build:
     commands:
       - yarn
