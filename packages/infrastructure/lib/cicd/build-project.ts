@@ -136,17 +136,29 @@ export class BuildProject extends cdk.Construct {
     );
     kmsPolicy.addResources(reportEncryptionKey.keyArn);
 
-    const artifactPolicy = new iam.PolicyStatement();
-    artifactPolicy.addActions('codeartifact:GetAuthorizationToken');
-    artifactPolicy.addResources('arn:aws:codeartifact:us-east-2:407299974961:domain/chessdb');
+    const artifactDomainPolicy = new iam.PolicyStatement();
+    artifactDomainPolicy.addActions('codeartifact:GetAuthorizationToken');
+    artifactDomainPolicy.addResources('arn:aws:codeartifact:us-east-2:407299974961:domain/chessdb');
+
+    const artifactRepoPolicy = new iam.PolicyStatement();
+    artifactRepoPolicy.addActions('codeartifact:GetRepositoryEndpoint');
+    artifactRepoPolicy.addResources('arn:aws:codeartifact:us-east-2:407299974961:repository/chessdb/chessdb-and-npm');
+    artifactRepoPolicy.addResources('arn:aws:codeartifact:us-east-2:407299974961:domain/chessdb/*');
     
+    const artifactPackagePolicy = new iam.PolicyStatement();
+    artifactPackagePolicy.addActions('codeartifact:GetRepositoryEndpoint', 'codeartifact:*');
+    artifactPackagePolicy.addResources(
+      'arn:aws:codeartifact:us-east-2:407299974961:package/chessdb/*/*/*/*',
+      'arn:aws:codeartifact:us-east-2:407299974961:package/chessdb/*/*//*');
+
     const codeBuildPolicy = new iam.PolicyStatement();
     codeBuildPolicy.addActions('logs:*');
     codeBuildPolicy.addActions('cloudwatch:*');
     codeBuildPolicy.addAllResources();
 
-    buildRole.addToPolicy(artifactPolicy);
-    buildRole.addToPolicy(reportingPolicy);
+    buildRole.addToPolicy(artifactDomainPolicy);
+    buildRole.addToPolicy(artifactRepoPolicy);
+    buildRole.addToPolicy(artifactPackagePolicy);
     buildRole.addToPolicy(bucketPolicy);
     buildRole.addToPolicy(kmsPolicy);
     buildRole.addToPolicy(codeBuildPolicy);
