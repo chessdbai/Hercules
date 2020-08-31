@@ -1,0 +1,23 @@
+{
+  "name": "@chessdb.ai/aws-api-client-core",
+  "version": "1.0.0-alpha",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "John Davis <john@chessdb.biz>",
+  "license": "MIT",
+  "dependencies": {
+    "@lifeomic/attempt": "^3.0.0",
+    "aws-sdk": "^2.601.0",
+    "axios": "^0.19.1",
+    "crypto-js": "^4.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^3.1.47",
+    "@types/node": "^12.7.8",
+    "typescript": "^3.6.3"
+  }
+}

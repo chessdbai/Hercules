@@ -12,6 +12,7 @@ interface PackageReportGroups {
 
 interface ReportGroups {
   website: PackageReportGroups,
+  typeScriptAwsClientCore: PackageReportGroups,
   typeScriptClient: PackageReportGroups,
   api: PackageReportGroups,
   triggers: PackageReportGroups,
@@ -64,6 +65,7 @@ export class BuildProject extends cdk.Construct {
     
     this.reportGroups = {
       api: createDotNetDualReportGroups               (this, buildReportsBucket, 'hercules-api'),
+      typeScriptAwsClientCore: createDotNetDualReportGroups(this, buildReportsBucket, 'aws-ts-client-core'),
       triggers: createDotNetDualReportGroups          (this, buildReportsBucket, 'hercules-triggers'),
       dotnetClient: createDotNetDualReportGroups      (this, buildReportsBucket, 'hercules-dotnet-client'),
       model: createDotNetDualReportGroups             (this, buildReportsBucket, 'hercules-api-model'),

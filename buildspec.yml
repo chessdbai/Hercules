@@ -11,18 +11,6 @@ phases:
       - curl -o- -L https://yarnpkg.com/install.sh | bash
       - echo "Installing the AWS CDK"
       - npm install -g aws-cdk
-      - echo "Installing PowerShell"
-      - wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
-      - dpkg -i packages-microsoft-prod.deb
-      - apt-get update
-      - add-apt-repository universe
-      - apt-get install -y powershell
-      - echo "PowerShell installed, contents of v7 directory:"
-      - ls -l /usr/local/microsoft/powershell/7
-      - echo "PowerShell installed, contents of v7 bin directory:"
-      - ls -l /usr/local/microsoft/powershell/7/bin
-      - echo "PowerShell installed, here is path:"
-      - echo $PATH
       - echo "Installing the Lambda CLI plugin"
       - dotnet tool install -g Amazon.Lambda.Tools
   build:

@@ -61,7 +61,8 @@
     "react-helmet-async": "^1.0.4",
     "umi": "^3.2.0",
     "umi-request": "^1.0.8",
-    "use-merge-value": "^1.0.1"
+    "use-merge-value": "^1.0.1",
+    "@chessdb.ai/hercules-api-client": "../clients/api-client-typescript"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^2.0.2",
