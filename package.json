@@ -9,6 +9,7 @@
     "bootstrap": "lerna bootstrap --ignore-scripts --concurrency 1",
     "build": "lerna run build",
     "clean": "lerna run clean --parallel",
+    "clean-reset": "lerna run reset --parallel",
     "test": "lerna run test",
     "release": "yarn run bootstrap && yarn run build && yarn run test"
   },

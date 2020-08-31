@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euxo pipefail
+
 cd test/Hercules.Api.Tests
 dotnet restore
 

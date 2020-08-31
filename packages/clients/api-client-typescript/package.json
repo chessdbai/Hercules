@@ -16,7 +16,8 @@
     "test": "jest --runInBand",
     "test-suite": "jest --runInBand -t $SUITE",
     "build": "tsc",
-    "clean": "rm yarn.lock && rm -rf node_modules"
+    "clean": "./scripts/clean.sh",
+    "reset": "./scripts/reset.sh"
   },
   "devDependencies": {
     "@types/node": "^12.7.8",

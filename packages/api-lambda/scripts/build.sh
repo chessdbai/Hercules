@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euxo pipefail
+
 rm -rf dist || TRUE
 mkdir dist
 

@@ -7,8 +7,6 @@ phases:
       nodejs: 12
       python: 3.8
     commands:
-      - echo "Installing yarn"
-      - curl -o- -L https://yarnpkg.com/install.sh | bash
       - echo "Installing the AWS CDK"
       - npm install -g aws-cdk
       - echo "Installing the Lambda CLI plugin"
@@ -19,8 +17,8 @@ phases:
       - aws codeartifact login --tool npm --repository chessdb-and-npm --domain chessdb --domain-owner 407299974961 --region us-east-2
   build:
     commands:
-      - yarn
-      - yarn run release
+      - npm i
+      - npm run release
 reports:
   'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-dotnet-client-tests':
     files:
