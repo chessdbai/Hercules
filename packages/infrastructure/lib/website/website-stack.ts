@@ -5,7 +5,7 @@ import { Website } from './website';
 
 interface WebsiteStackProps extends cdk.StackProps {
   domainName: string,
-  trustedAccount: string
+  publicZoneId: string
 }
 
 export class WebsiteStack extends cdk.Stack {
@@ -15,6 +15,8 @@ export class WebsiteStack extends cdk.Stack {
     const publicZone = r53.PublicHostedZone.fromLookup(this, 'PublicZone', {
       domainName: props.domainName
     });
+
+    const publicZone = r53.PublicHostedZone.fromHostedZoneId(this, 'PublicZone', props.publicZoneId);
 
     const websiteCertArn = cdk.Fn.importValue('WebsiteCertArn');
     const websiteCert = certs.Certificate.fromCertificateArn(this, 'WebsiteCert', websiteCertArn);

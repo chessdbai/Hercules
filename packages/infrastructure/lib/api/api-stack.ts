@@ -6,7 +6,7 @@ import { ApiEndpoint } from './api-endpoint';
 
 interface ApiStackProps extends cdk.StackProps {
   domainName: string,
-  trustedAccount: string
+  publicZoneId: string
 }
 
 export class ApiStack extends cdk.Stack {
@@ -22,9 +22,7 @@ export class ApiStack extends cdk.Stack {
       provisionedInstances: 1
     });
     
-    const publicZone = r53.PublicHostedZone.fromLookup(this, 'PublicZone', {
-      domainName: props.domainName
-    });
+    const publicZone = r53.PublicHostedZone.fromHostedZoneId(this, 'PublicZone', props.publicZoneId);
 
     const apiCertArn = cdk.Fn.importValue('ApiCertArn');
     const apiCert = certs.Certificate.fromCertificateArn(this, 'ApiCert', apiCertArn); 

@@ -4,8 +4,7 @@ import { Auth } from './auth';
 interface AuthStackProps extends cdk.StackProps {
   domainName: string,
   replyToEmail: string,
-  replyToEmailArn: string,
-  trustedAccount: string
+  replyToEmailArn: string
 }
 
 export class AuthStack extends cdk.Stack {

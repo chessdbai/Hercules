@@ -16,25 +16,23 @@ accounts.ACCOUNTS.forEach(account => {
   };
   new stacks.CoreStack(app, `Core${suffix}`, {
     env: env,
-    domainName: account.domainName,
-    trustedAccount: DeployAccountId
+    domainName: account.domainName
   });
   new stacks.AuthStack(app, `Auth${suffix}`, {
     env: env,
     domainName: account.domainName,
     replyToEmail: account.replyToEmail,
-    replyToEmailArn: account.replyToEmailArn,
-    trustedAccount: DeployAccountId
+    replyToEmailArn: account.replyToEmailArn
   });
   new stacks.WebsiteStack(app, `Website${suffix}`, {
     env: env,
     domainName: 'chessdb.ai',
-    trustedAccount: DeployAccountId
+    publicZoneId: account.publicZoneId
   });
   new stacks.ApiStack(app, `Api${suffix}`, {
     env: env,
     domainName: 'chessdb.ai',
-    trustedAccount: DeployAccountId
+    publicZoneId: account.publicZoneId
   });
 });
 

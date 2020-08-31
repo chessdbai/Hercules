@@ -6,7 +6,8 @@ export interface HerculesAccount {
   stage: string,
   domainName: string,
   replyToEmailArn: string,
-  replyToEmail: string
+  replyToEmail: string,
+  publicZoneId: string
 }
 
 const HerculesBeta : HerculesAccount = {
@@ -15,7 +16,8 @@ const HerculesBeta : HerculesAccount = {
   stage: 'beta',
   domainName: 'beta.chessdb.biz',
   replyToEmailArn: 'arn:aws:ses:us-west-2:996734812344:identity/no-reply@beta.chessdb.biz',
-  replyToEmail: 'no-reply@beta.chessdb.biz'
+  replyToEmail: 'no-reply@beta.chessdb.biz',
+  publicZoneId: '/hostedzone/Z0115582UE0EG00XDYJ2'
 };
 
 const HerculesProd : HerculesAccount = {
@@ -24,7 +26,8 @@ const HerculesProd : HerculesAccount = {
   stage: 'prod',
   domainName: 'chessdb.ai',
   replyToEmailArn: 'arn:aws:ses:us-east-1:541249553451:identity/no-reply@chessdb.ai',
-  replyToEmail: 'no-reply@chessdb.ai'
+  replyToEmail: 'no-reply@chessdb.ai',
+  publicZoneId: '/hostedzone/Z00725913JABR2S4TT8ZI'
 };
 
 const DeployAccountEnv : cdk.Environment = {
