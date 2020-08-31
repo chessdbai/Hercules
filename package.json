@@ -11,7 +11,7 @@
     "clean": "lerna run clean --parallel",
     "clean-reset": "lerna run reset --parallel",
     "test": "lerna run test",
-    "release": "yarn run bootstrap && yarn run build && yarn run test"
+    "release": "npm run bootstrap && npm run build && npm run test"
   },
   "private": true,
   "devDependencies": {
