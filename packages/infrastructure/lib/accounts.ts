@@ -10,6 +10,16 @@ export interface HerculesAccount {
   replyToEmail: string
 }
 
+const HerculesBeta : HerculesAccount = {
+  accountId: '996734812344',
+  region: 'us-east-2',
+  stage: 'beta',
+  domainName: 'beta.chessdb.biz',
+  apiDomainName: 'beta-api.chessdb.biz',
+  replyToEmailArn: 'arn:aws:ses:us-west-2:996734812344:identity/no-reply@beta.chessdb.biz',
+  replyToEmail: 'no-reply@beta.chessdb.biz'
+};
+
 const HerculesProd : HerculesAccount = {
   accountId: '541249553451',
   region: 'us-east-2',
@@ -26,10 +36,12 @@ const DeployAccountEnv : cdk.Environment = {
 }
 
 const ACCOUNTS = [
+  HerculesBeta,
   HerculesProd 
 ];
 
 export {
+  HerculesBeta,
   HerculesProd,
   DeployAccountEnv,
   ACCOUNTS

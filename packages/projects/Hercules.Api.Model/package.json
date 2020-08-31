@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "postinstall": "pwsh ../../../scripts/NetRestore.ps1",
-    "build": "pwsh ../../../scripts/NetBuild.ps1",
-    "clean": "pwsh ../../../scripts/NetClean.ps1",
-    "test": "pwsh ../../../scripts/NetTest.ps1"
+    "postinstall": "../../../scripts/NetRestore.ps1",
+    "build": "../../../scripts/NetBuild.ps1",
+    "clean": "../../../scripts/NetClean.ps1",
+    "test": "../../../scripts/NetTest.ps1"
   },
   "dotnet": {
     "projects": [

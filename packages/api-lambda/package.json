@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "scripts/build.sh",
-    "clean": "scripts/clean.sh"
+    "postinstall": "../../scripts/NetRestore.ps1",
+    "build": "../../scripts/NetBuild.ps1",
+    "clean": "../../scripts/NetClean.ps1",
+    "test": "../../scripts/NetTest.ps1"
   },
   "dependencies": {
     "@chessdb.biz/hercules-api-model": "../projects/Hercules.Api.Model/"
