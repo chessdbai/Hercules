@@ -5,7 +5,6 @@ export interface HerculesAccount {
   region: string,
   stage: string,
   domainName: string,
-  apiDomainName: string,
   replyToEmailArn: string,
   replyToEmail: string
 }
@@ -15,7 +14,6 @@ const HerculesBeta : HerculesAccount = {
   region: 'us-east-2',
   stage: 'beta',
   domainName: 'beta.chessdb.biz',
-  apiDomainName: 'beta-api.chessdb.biz',
   replyToEmailArn: 'arn:aws:ses:us-west-2:996734812344:identity/no-reply@beta.chessdb.biz',
   replyToEmail: 'no-reply@beta.chessdb.biz'
 };
@@ -25,7 +23,6 @@ const HerculesProd : HerculesAccount = {
   region: 'us-east-2',
   stage: 'prod',
   domainName: 'chessdb.ai',
-  apiDomainName: 'api.chessdb.ai',
   replyToEmailArn: 'arn:aws:ses:us-east-1:541249553451:identity/no-reply@chessdb.ai',
   replyToEmail: 'no-reply@chessdb.ai'
 };

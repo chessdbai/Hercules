@@ -2,5 +2,9 @@
   "hosted-zone:account=541249553451:domainName=chessdb.ai:region=us-east-2": {
     "Id": "/hostedzone/Z00725913JABR2S4TT8ZI",
     "Name": "chessdb.ai."
+  },
+  "hosted-zone:account=996734812344:domainName=beta.chessdb.biz:region=us-east-2": {
+    "Id": "/hostedzone/Z0115582UE0EG00XDYJ2",
+    "Name": "beta.chessdb.biz."
   }
 }
