@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "scripts/build.sh",
-    "clean": "scripts/clean.sh"
+    "postinstall": "./scripts/restore.sh",
+    "build": "./scripts/build.sh",
+    "clean": "./scripts/clean.sh",
+    "test": "./scripts/test.sh"
   },
   "dependencies": {
     "@chessdb.biz/hercules-api-client": "../projects/Hercules.Api.Client/"
