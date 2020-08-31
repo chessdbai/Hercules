@@ -5,7 +5,7 @@
     "infrastructure": "bin/infrastructure.js"
   },
   "scripts": {
-    "build": "tsc && cdk synth -o build –-plugin cdk-assume-role-credential-plugin",
+    "build": "tsc && cdk synth -o build",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk"
@@ -42,5 +42,10 @@
     "@chessdb.biz/api-lambda": "../api-lambda",
     "@chessdb.biz/website": "../website",
     "@chessdb.biz/hercules-api-triggers": "../triggers"
+  },
+  "awsProfiles": {
+    "": "",
+    "": "",
+    "": ""
   }
 }
