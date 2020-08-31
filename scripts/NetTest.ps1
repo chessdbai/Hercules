@@ -1,4 +1,4 @@
-#!/usr/bin env pwsh
+#!/usr/local/bin/pwsh
 $commonModLocation = Join-Path -Path $PSScriptRoot -ChildPath 'CommonBuildScripts.psm1'
 Import-Module $commonModLocation -Force
 
