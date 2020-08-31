@@ -4,6 +4,8 @@ import * as cdk from '@aws-cdk/core';
 import * as stacks from '../lib/';
 import * as accounts from '../lib/accounts';
 
+const DeployAccountId = accounts.DeployAccountEnv.account!;
+
 const app = new cdk.App();
 
 accounts.ACCOUNTS.forEach(account => {
@@ -14,21 +16,25 @@ accounts.ACCOUNTS.forEach(account => {
   };
   new stacks.CoreStack(app, `Core${suffix}`, {
     env: env,
-    domainName: account.domainName
+    domainName: account.domainName,
+    trustedAccount: DeployAccountId
   });
   new stacks.AuthStack(app, `Auth${suffix}`, {
     env: env,
     domainName: account.domainName,
     replyToEmail: account.replyToEmail,
-    replyToEmailArn: account.replyToEmailArn
+    replyToEmailArn: account.replyToEmailArn,
+    trustedAccount: DeployAccountId
   });
   new stacks.WebsiteStack(app, `Website${suffix}`, {
     env: env,
-    domainName: 'chessdb.ai'
+    domainName: 'chessdb.ai',
+    trustedAccount: DeployAccountId
   });
   new stacks.ApiStack(app, `Api${suffix}`, {
     env: env,
-    domainName: 'chessdb.ai'
+    domainName: 'chessdb.ai',
+    trustedAccount: DeployAccountId
   });
 });
 

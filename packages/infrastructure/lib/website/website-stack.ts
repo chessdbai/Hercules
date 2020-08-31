@@ -4,7 +4,8 @@ import * as certs from '@aws-cdk/aws-certificatemanager';
 import { Website } from './website';
 
 interface WebsiteStackProps extends cdk.StackProps {
-  domainName: string
+  domainName: string,
+  trustedAccount: string
 }
 
 export class WebsiteStack extends cdk.Stack {

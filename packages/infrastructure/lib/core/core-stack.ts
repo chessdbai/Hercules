@@ -3,7 +3,8 @@ import * as r53 from '@aws-cdk/aws-route53';
 import * as certs from '@aws-cdk/aws-certificatemanager';
 
 interface CoreStackProps extends cdk.StackProps {
-  domainName: string
+  domainName: string,
+  trustedAccount: string
 }
 
 export class CoreStack extends cdk.Stack {

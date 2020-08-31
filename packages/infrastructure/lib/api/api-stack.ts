@@ -5,7 +5,8 @@ import { ApiLambda } from './api-lambda';
 import { ApiEndpoint } from './api-endpoint';
 
 interface ApiStackProps extends cdk.StackProps {
-  domainName: string
+  domainName: string,
+  trustedAccount: string
 }
 
 export class ApiStack extends cdk.Stack {
