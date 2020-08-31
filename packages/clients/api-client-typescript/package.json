@@ -10,7 +10,7 @@
     "@types/jest": "^24.9.0",
     "aws-sdk": "^2.601.0",
     "axios": "^0.19.1",
-    "@chessdb.ai/aws-api-client-core": "../aws-api-client-core/"
+    "@chessdb.ai/aws-api-client-core": "file:../aws-api-client-core/"
   },
   "scripts": {
     "test": "jest --runInBand",

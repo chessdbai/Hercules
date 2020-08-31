@@ -13,7 +13,7 @@ phases:
       - npm install -g aws-cdk
       - echo "Installing the Lambda CLI plugin"
       - dotnet tool install -g Amazon.Lambda.Tools
-      - npm install -g git+https://github.com/aws-samples/cdk-assume-role-credential-plugin.git
+      - npm install -g cdk-assume-role-credential-plugin
   pre_build:
     commands:
       - aws codeartifact login --tool npm --repository chessdb-and-npm --domain chessdb --domain-owner 407299974961 --region us-east-2

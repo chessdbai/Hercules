@@ -9,7 +9,7 @@
     "test": "../../../scripts/NetTest.ps1"
   },
   "dependencies": {
-    "@chessdb.biz/hercules-api-model": "../Hercules.Api.Model/"
+    "@chessdb.biz/hercules-api-model": "file:../Hercules.Api.Model/"
   },
   "dotnet": {
     "projects": [

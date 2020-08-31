@@ -5,7 +5,7 @@
     "infrastructure": "bin/infrastructure.js"
   },
   "scripts": {
-    "build": "tsc && cdk synth -o build",
+    "build": "tsc && cdk synth",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk"
@@ -39,13 +39,8 @@
     "@aws-cdk/aws-sqs": "1.61.1",
     "@aws-cdk/core": "^1.61.1",
     "source-map-support": "^0.5.16",
-    "@chessdb.biz/api-lambda": "../api-lambda",
-    "@chessdb.biz/website": "../website",
-    "@chessdb.biz/hercules-api-triggers": "../triggers"
-  },
-  "awsProfiles": {
-    "": "",
-    "": "",
-    "": ""
+    "@chessdb.biz/api-lambda": "file:../api-lambda",
+    "@chessdb.biz/website": "file:../website",
+    "@chessdb.biz/hercules-api-triggers": "file:../triggers"
   }
 }

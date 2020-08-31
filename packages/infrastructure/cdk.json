@@ -5,7 +5,6 @@
     "aws-cdk:enableDiffNoFail": "true",
     "@aws-cdk/core:stackRelativeExports": "true",
     "plugin": [
-      "cdk-multi-profile-plugin",
       "cdk-assume-role-credential-plugin"
     ]
   }

@@ -9,6 +9,6 @@
     "test": "./scripts/test.sh"
   },
   "dependencies": {
-    "@chessdb.biz/hercules-api-client": "../projects/Hercules.Api.Client/"
+    "@chessdb.biz/hercules-api-client": "file:../projects/Hercules.Api.Client/"
   }
 }

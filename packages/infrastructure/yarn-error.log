@@ -1,0 +1,86 @@
+Arguments: 
+  /usr/local/Cellar/node/14.9.0/bin/node /Users/john/.yarn/bin/yarn.js add --dev cdk-assume-role-credential-plugin
+
+PATH: 
+  /Users/john/.yarn/bin:/Users/john/.config/yarn/global/node_modules/.bin:/usr/local/Cellar/python@3.8/3.8.5/bin:/usr/local/Cellar/node/14.9.0/bin:/Users/john/Documents/chessbot/aidaemon/bin:/Users/john/.cargo/bin:/Users/john/.cabal/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion Tech Preview.app/Contents/Public:/Library/TeX/texbin:/usr/local/go/bin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/Contents/MacOS:/Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/bin:/Applications/IntelliJ IDEA.app/Contents/plugins/maven/lib/maven3
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  14.9.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://chessdb-407299974961.d.codeartifact.us-east-2.amazonaws.com/npm/chessdb-and-npm/@aws-cdk%2faws-apigateway: Unauthenticated: request used expired credentials. Please renew your credentials.
+      at Request.params.callback [as _callback] (/Users/john/.yarn/lib/cli.js:66988:18)
+      at Request.self.callback (/Users/john/.yarn/lib/cli.js:140749:22)
+      at Request.emit (events.js:314:20)
+      at Request.<anonymous> (/Users/john/.yarn/lib/cli.js:141721:10)
+      at Request.emit (events.js:314:20)
+      at Gunzip.<anonymous> (/Users/john/.yarn/lib/cli.js:141643:12)
+      at Object.onceWrapper (events.js:420:28)
+      at Gunzip.emit (events.js:314:20)
+      at endReadableNT (_stream_readable.js:1244:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+
+npm manifest: 
+  {
+    "name": "infrastructure",
+    "version": "0.1.0",
+    "bin": {
+      "infrastructure": "bin/infrastructure.js"
+    },
+    "scripts": {
+      "build": "tsc && cdk synth",
+      "watch": "tsc -w",
+      "test": "jest",
+      "cdk": "cdk"
+    },
+    "devDependencies": {
+      "@aws-cdk/assert": "1.61.1",
+      "@types/jest": "^26.0.4",
+      "@types/node": "10.17.27",
+      "aws-cdk": "1.61.1",
+      "jest": "^26.0.4",
+      "ts-jest": "^26.1.3",
+      "ts-node": "^8.1.0",
+      "typescript": "~3.9.6"
+    },
+    "dependencies": {
+      "@aws-cdk/aws-apigateway": "1.61.1",
+      "@aws-cdk/aws-cloudformation": "^1.61.1",
+      "@aws-cdk/aws-cloudfront": "1.61.1",
+      "@aws-cdk/aws-codebuild": "^1.61.1",
+      "@aws-cdk/aws-codecommit": "^1.61.1",
+      "@aws-cdk/aws-codepipeline": "^1.61.1",
+      "@aws-cdk/aws-codepipeline-actions": "^1.61.1",
+      "@aws-cdk/aws-cognito": "1.61.1",
+      "@aws-cdk/aws-dynamodb": "1.61.1",
+      "@aws-cdk/aws-lambda": "1.61.1",
+      "@aws-cdk/aws-route53": "1.61.1",
+      "@aws-cdk/aws-route53-targets": "^1.61.1",
+      "@aws-cdk/aws-s3": "1.61.1",
+      "@aws-cdk/aws-s3-deployment": "1.61.1",
+      "@aws-cdk/aws-sns": "1.61.1",
+      "@aws-cdk/aws-sqs": "1.61.1",
+      "@aws-cdk/core": "^1.61.1",
+      "source-map-support": "^0.5.16",
+      "@chessdb.biz/api-lambda": "../api-lambda",
+      "@chessdb.biz/website": "../website",
+      "@chessdb.biz/hercules-api-triggers": "../triggers"
+    },
+    "awsProfiles": {
+      "996734812344": "chessdb-beta",
+      "541249553451": "chessdb-prod",
+      "667342691845": "chessdb-deploy"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
