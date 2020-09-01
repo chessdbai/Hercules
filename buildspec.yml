@@ -69,5 +69,5 @@ reports:
     file-format: CoberturaXml
 artifacts:
   files:
-    - packages/infrastructure/cdk.out
+    - packages/infrastructure/build/*
   discard-paths: yes

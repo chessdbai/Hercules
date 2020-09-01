@@ -5,7 +5,7 @@
     "infrastructure": "bin/infrastructure.js"
   },
   "scripts": {
-    "build": "tsc && cdk synth && cp ./config/buildspec.yml ./cdk.out/",
+    "build": "tsc && cdk synth -o build && cp ./config/buildspec.yml ./build/",
     "watch": "tsc -w",
     "clean": "./scripts/clean.sh",
     "cdk": "cdk"
