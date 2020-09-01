@@ -144,6 +144,7 @@ export class BuildProject extends cdk.Construct {
     buildRole.addToPolicy(bucketPolicy);
     buildRole.addToPolicy(kmsPolicy);
     buildRole.addToPolicy(codeBuildPolicy);
+    buildRole.addToPolicy(reportingPolicy);
     buildRole.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AWSCodeArtifactAdminAccess'));
 
     this.project = buildProject;

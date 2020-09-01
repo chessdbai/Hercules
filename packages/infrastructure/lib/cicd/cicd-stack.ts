@@ -2,6 +2,7 @@ import * as cdk from '@aws-cdk/core';
 import * as sns from '@aws-cdk/aws-sns';
 import * as codebuild from '@aws-cdk/aws-codebuild';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
+import * as codestarnotifications from '@aws-cdk/aws-codestarnotifications';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
 import * as codecommit from '@aws-cdk/aws-codecommit';
 import { HerculesAccount } from '../accounts';
@@ -22,6 +23,9 @@ interface CicdStackProps extends cdk.StackProps {
 export class CicdStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: CicdStackProps) {
     super(scope, id, props);
+
+    const approvalTopicArn = cdk.Fn.importValue('PlumberApprovalsTopicArn');
+    const notificationsTopicArn = cdk.Fn.importValue('PlumberNotificationsTopicArn');
     
     const herculesRepo = new codecommit.Repository(this, 'Repo', {
       repositoryName: 'hercules'
@@ -98,11 +102,12 @@ export class CicdStack extends cdk.Stack {
         });
       };
 
+      
       const approvalActionForStack = (stackName: string) : codepipeline.IAction => {
         const stackNameWithoutStack = friendlyName(stackName.replace('Stack', ''));
         return new codepipeline_actions.ManualApprovalAction({
           actionName: `Approve${stackNameWithoutStack}`,
-          notificationTopic: sns.Topic.fromTopicArn(this, `${acc.stage}ApprovalsTopic${stackNameWithoutStack}`, 'arn:aws:sns:us-east-2:667342691845:pipeline-plumber-approvals')
+          notificationTopic: sns.Topic.fromTopicArn(this, `${acc.stage}ApprovalsTopic${stackNameWithoutStack}`, approvalTopicArn)
         });
       };
 
@@ -130,6 +135,39 @@ export class CicdStack extends cdk.Stack {
       actions.forEach(a => {
         deployStage.addAction(a);
       });
+    });
+
+    const notifications = new codestarnotifications.CfnNotificationRule(this, 'Notifications', {
+      name: 'HerculesNotifications',
+      status: 'ENABLED',
+      resource: pipeline.pipelineArn,
+      targets: [
+        {
+          targetType: 'SNS',
+          targetAddress: notificationsTopicArn
+        }
+      ],
+      detailType: 'FULL',
+      eventTypeIds: [
+        'codepipeline-pipeline-action-execution-succeeded',
+        'codepipeline-pipeline-action-execution-failed',
+        'codepipeline-pipeline-action-execution-canceled',
+        'codepipeline-pipeline-action-execution-started',
+        'codepipeline-pipeline-stage-execution-started',
+        'codepipeline-pipeline-stage-execution-succeeded',
+        'codepipeline-pipeline-stage-execution-resumed',
+        'codepipeline-pipeline-stage-execution-canceled',
+        'codepipeline-pipeline-stage-execution-failed',
+        'codepipeline-pipeline-pipeline-execution-failed',
+        'codepipeline-pipeline-pipeline-execution-canceled',
+        'codepipeline-pipeline-pipeline-execution-started',
+        'codepipeline-pipeline-pipeline-execution-resumed',
+        'codepipeline-pipeline-pipeline-execution-succeeded',
+        'codepipeline-pipeline-pipeline-execution-superseded',
+        'codepipeline-pipeline-manual-approval-failed',
+        'codepipeline-pipeline-manual-approval-needed',
+        'codepipeline-pipeline-manual-approval-succeeded'
+      ]
     });
   }
 }
