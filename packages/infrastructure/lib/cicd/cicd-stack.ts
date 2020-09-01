@@ -1,10 +1,19 @@
 import * as cdk from '@aws-cdk/core';
+import * as sns from '@aws-cdk/aws-sns';
 import * as codebuild from '@aws-cdk/aws-codebuild';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
 import * as codecommit from '@aws-cdk/aws-codecommit';
 import { HerculesAccount } from '../accounts';
 import { BuildProject } from './build-project';
+
+const friendlyName = (name: string) : string => {
+  if (name.length == 0) return name;
+  if (name.length == 1) return name.toUpperCase();
+
+  var first = name[0].toUpperCase();
+  return first + name.substring(1, name.length);
+}
 
 interface CicdStackProps extends cdk.StackProps {
   accounts: HerculesAccount[]
@@ -58,32 +67,69 @@ export class CicdStack extends cdk.Stack {
 
     props.accounts.forEach(acc => {
       const deployStage = pipeline.addStage({
-        stageName: `${acc.stage}Deploy`
+        stageName: `Deploy${friendlyName(acc.stage)}`
       });
-      deployStage.addAction(new codepipeline_actions.CodeBuildAction({
-        project: deployProject,
-        input: buildOutput,
-        actionName: `${acc.stage}DeployCore`,
-        runOrder: 1
-      }));
-      deployStage.addAction(new codepipeline_actions.CodeBuildAction({
-        project: deployProject,
-        input: buildOutput,
-        actionName: `${acc.stage}DeployAuth`,
-        runOrder: 2
-      }));
-      deployStage.addAction(new codepipeline_actions.CodeBuildAction({
-        project: deployProject,
-        input: buildOutput,
-        actionName: `${acc.stage}DeployWebsite`,
-        runOrder: 3
-      }));
-      deployStage.addAction(new codepipeline_actions.CodeBuildAction({
-        project: deployProject,
-        input: buildOutput,
-        actionName: `${acc.stage}DeployApi`,
-        runOrder: 4
-      }));
+      var actions : codepipeline.IAction[] = [];
+
+      const deployActionForStack = (stackName: string) : codepipeline.IAction => {
+        const stackNameWithoutStack = friendlyName(stackName.replace('Stack', ''));
+        return new codepipeline_actions.CodeBuildAction({
+          project: deployProject,
+          input: buildOutput,
+          actionName: `Deploy${stackNameWithoutStack}`,
+          environmentVariables: {
+            'STACK_NAME': {
+              type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
+              value: `${stackName}-${acc.stage}`
+            },
+            'DESTINATION_REGION': {
+              type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
+              value: acc.region
+            },
+            'DESTINATION_ACCOUNT': {
+              type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
+              value: acc.accountId
+            },
+            'DEPLOYMENT_ROLE_ARN': {
+              type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
+              value: acc.deploymentRole
+            }
+          }
+        });
+      };
+
+      const approvalActionForStack = (stackName: string) : codepipeline.IAction => {
+        const stackNameWithoutStack = friendlyName(stackName.replace('Stack', ''));
+        return new codepipeline_actions.ManualApprovalAction({
+          actionName: `Approve${stackNameWithoutStack}`,
+          notificationTopic: sns.Topic.fromTopicArn(this, `${acc.stage}ApprovalsTopic${stackNameWithoutStack}`, 'arn:aws:sns:us-east-2:667342691845:pipeline-plumber-approvals')
+        });
+      };
+
+      const stackNames = [
+        'CoreStack',
+        'AuthStack',
+        'WebsiteStack',
+        'ApiStack',
+      ];
+      const lastStackName = stackNames[stackNames.length-1];
+
+      stackNames.forEach(sn => {
+        actions.push(deployActionForStack(sn));
+
+        if (acc.stage.toLowerCase() === 'prod' || sn === lastStackName) {
+          actions.push(approvalActionForStack(sn));
+        }
+      });
+
+      for (var a = 0; a < actions.length; a++) {
+        var action = actions[a];
+        (action.actionProperties as any).runOrder = a + 1;
+      }
+
+      actions.forEach(a => {
+        deployStage.addAction(a);
+      });
     });
   }
 }

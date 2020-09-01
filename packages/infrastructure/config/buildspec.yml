@@ -3,17 +3,18 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      dotnet: 3.1
       nodejs: 12
-      python: 3.8
     commands:
       - echo "Installing the AWS CDK"
       - npm install -g aws-cdk
-      - echo "Installing the Lambda CLI plugin"
-      - dotnet tool install -g Amazon.Lambda.Tools
   pre_build:
     commands:
-      - aws codeartifact login --tool npm --repository chessdb-and-npm --domain chessdb --domain-owner 407299974961 --region us-east-2
+      - TEMP_ROLE=`aws sts assume-role --role-arn $ASSUME_ROLE_ARN --role-session-name test`
+      - export TEMP_ROLE
+      - echo $TEMP_ROLE
+      - export AWS_ACCESS_KEY_ID=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.AccessKeyId')
+      - export AWS_SECRET_ACCESS_KEY=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SecretAccessKey')
+      - export AWS_SESSION_TOKEN=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SessionToken')
   build:
     commands:
       - npm i
@@ -69,5 +70,5 @@ reports:
     file-format: CoberturaXml
 artifacts:
   files:
-    - packages/infrastructure/cdk.out
+    - packages/infrastructure/build
   discard-paths: yes

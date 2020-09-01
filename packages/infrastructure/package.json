@@ -5,9 +5,8 @@
     "infrastructure": "bin/infrastructure.js"
   },
   "scripts": {
-    "build": "tsc && cdk synth",
+    "build": "tsc && cdk synth && cp ./config/buildspec.yml ./cdk.out/",
     "watch": "tsc -w",
-    "test": "jest",
     "clean": "./scripts/clean.sh",
     "cdk": "cdk"
   },
@@ -16,8 +15,6 @@
     "@types/jest": "^26.0.4",
     "@types/node": "10.17.27",
     "aws-cdk": "1.61.1",
-    "jest": "^26.0.4",
-    "ts-jest": "^26.1.3",
     "ts-node": "^8.1.0",
     "typescript": "~3.9.6"
   },
@@ -42,6 +39,7 @@
     "source-map-support": "^0.5.16",
     "@chessdb.biz/api-lambda": "file:../api-lambda",
     "@chessdb.biz/website": "file:../website",
-    "@chessdb.biz/hercules-api-triggers": "file:../triggers"
+    "@chessdb.biz/hercules-api-triggers": "file:../triggers",
+    "@chessdb.biz/zeus-accounts": "0.29.0"
   }
 }
