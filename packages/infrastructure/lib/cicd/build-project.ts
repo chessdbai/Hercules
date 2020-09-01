@@ -79,6 +79,16 @@ export class BuildProject extends cdk.Construct {
       role: buildRole
     });
 
+    this.reportGroups = {
+      api: createDotNetDualReportGroups               (this, buildReportsBucket, 'hercules-api'),
+      typeScriptAwsClientCore: createDotNetDualReportGroups(this, buildReportsBucket, 'aws-ts-client-core'),
+      triggers: createDotNetDualReportGroups          (this, buildReportsBucket, 'hercules-triggers'),
+      dotnetClient: createDotNetDualReportGroups      (this, buildReportsBucket, 'hercules-dotnet-client'),
+      model: createDotNetDualReportGroups             (this, buildReportsBucket, 'hercules-api-model'),
+      website: createDotNetDualReportGroups           (this, buildReportsBucket, 'hercules-website'),
+      typeScriptClient: createDotNetDualReportGroups  (this, buildReportsBucket, 'hercules-typescript-client'),
+    }
+
     const reportingPolicy = new iam.PolicyStatement();
     reportingPolicy.addActions(
       "codebuild:BatchGetBuildBatches",
@@ -126,35 +136,16 @@ export class BuildProject extends cdk.Construct {
     );
     kmsPolicy.addResources(reportEncryptionKey.keyArn);
 
-    const artifactDomainPolicy = new iam.PolicyStatement();
-    artifactDomainPolicy.addActions('codeartifact:GetAuthorizationToken');
-    artifactDomainPolicy.addResources('arn:aws:codeartifact:us-east-2:407299974961:domain/chessdb');
-
-    const artifactRepoPolicy = new iam.PolicyStatement();
-    artifactRepoPolicy.addActions('codeartifact:GetRepositoryEndpoint');
-    artifactRepoPolicy.addActions('codeartifact:GetRepositoryEndpoint');
-    artifactRepoPolicy.addResources('arn:aws:codeartifact:us-east-2:407299974961:repository/chessdb/chessdb-and-npm');
-    artifactRepoPolicy.addResources('arn:aws:codeartifact:us-east-2:407299974961:domain/chessdb/*');
-    
-    const artifactPackagePolicy = new iam.PolicyStatement();
-    artifactPackagePolicy.addActions('codeartifact:GetRepositoryEndpoint', 'codeartifact:*');
-    artifactPackagePolicy.addResources(
-      'arn:aws:codeartifact:us-east-2:407299974961:package/chessdb/*/*/*/*',
-      'arn:aws:codeartifact:us-east-2:407299974961:package/chessdb/*/*//*');
-
     const codeBuildPolicy = new iam.PolicyStatement();
     codeBuildPolicy.addActions('logs:*');
     codeBuildPolicy.addActions('cloudwatch:*');
     codeBuildPolicy.addAllResources();
 
-    buildRole.addToPolicy(artifactDomainPolicy);
-    buildRole.addToPolicy(artifactRepoPolicy);
-    buildRole.addToPolicy(artifactPackagePolicy);
     buildRole.addToPolicy(bucketPolicy);
     buildRole.addToPolicy(kmsPolicy);
     buildRole.addToPolicy(codeBuildPolicy);
     buildRole.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AWSCodeArtifactAdminAccess'));
-    
+
     this.project = buildProject;
   }
 }

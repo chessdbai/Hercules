@@ -63,7 +63,7 @@ export class ApiEndpoint extends Construct {
     new ARecord(this, 'ApiDomainARecord', {
       target: RecordTarget.fromAlias(new ApiGatewayDomain(customDomain)),
       zone: props.hostedZone,
-      recordName: 'api.' + props.hostedZone.zoneName
+      recordName: 'api.' + props.domainName
     });
 
     const authorizer = new ApiAuthorizer(this, 'ApiAuthorizer', {

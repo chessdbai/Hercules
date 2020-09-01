@@ -8,6 +8,7 @@
     "build": "tsc && cdk synth",
     "watch": "tsc -w",
     "test": "jest",
+    "clean": "./scripts/clean.sh",
     "cdk": "cdk"
   },
   "devDependencies": {

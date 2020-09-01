@@ -7,7 +7,6 @@
   "license": "MIT",
   "dependencies": {
     "@lifeomic/attempt": "^3.0.0",
-    "@types/jest": "^24.9.0",
     "aws-sdk": "^2.601.0",
     "axios": "^0.19.1",
     "@chessdb.ai/aws-api-client-core": "file:../aws-api-client-core/"
@@ -20,8 +19,10 @@
     "reset": "./scripts/reset.sh"
   },
   "devDependencies": {
+    "@types/jest": "^24.9.1",
     "@types/node": "^12.7.8",
     "jest": "^24.9.0",
+    "jest-junit": "^11.1.0",
     "ts-jest": "^24.3.0",
     "typescript": "^3.6.3"
   },

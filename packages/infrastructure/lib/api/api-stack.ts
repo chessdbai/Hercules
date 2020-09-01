@@ -1,8 +1,8 @@
 import * as cdk from '@aws-cdk/core';
-import * as r53 from '@aws-cdk/aws-route53';
 import * as certs from '@aws-cdk/aws-certificatemanager';
 import { ApiLambda } from './api-lambda';
 import { ApiEndpoint } from './api-endpoint';
+import { ShimHostedZone } from '../shim-hosted-zone';
 
 interface ApiStackProps extends cdk.StackProps {
   domainName: string,
@@ -22,8 +22,10 @@ export class ApiStack extends cdk.Stack {
       provisionedInstances: 1
     });
     
-    const publicZone = r53.PublicHostedZone.fromHostedZoneId(this, 'PublicZone', props.publicZoneId);
-
+    const publicZone = new ShimHostedZone(this, 'PublicZone', {
+      hostedZoneId: props.publicZoneId,
+      zoneName: props.domainName
+    });
     const apiCertArn = cdk.Fn.importValue('ApiCertArn');
     const apiCert = certs.Certificate.fromCertificateArn(this, 'ApiCert', apiCertArn); 
     new ApiEndpoint(this, 'Api', {

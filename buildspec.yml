@@ -43,6 +43,30 @@ reports:
     base-directory: location
     discard-paths: yes
     file-format: CoberturaXml
+  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-typescript-client-tests':
+    files:
+      - test-reports/api-client-typescript/test-results.xml
+    base-directory: location
+    discard-paths: yes
+    file-format: JunitXml
+  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-typescript-client-coverage':
+    files:
+      - test-reports/api-client-typescript/coverage.xml
+    base-directory: location
+    discard-paths: yes
+    file-format: CoberturaXml
+  'arn:aws:codebuild:us-east-2:667342691845:report-group/aws-ts-client-core-tests':
+    files:
+      - test-reports/aws-api-client-core/test-results.xml
+    base-directory: location
+    discard-paths: yes
+    file-format: JunitXml
+  'arn:aws:codebuild:us-east-2:667342691845:report-group/aws-ts-client-core-coverage':
+    files:
+      - test-reports/aws-api-client-core/coverage.xml
+    base-directory: location
+    discard-paths: yes
+    file-format: CoberturaXml
 artifacts:
   files:
     - packages/infrastructure/build

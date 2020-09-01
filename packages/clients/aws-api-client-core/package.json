@@ -14,11 +14,17 @@
   "scripts": {
     "build": "tsc",
     "clean": "./scripts/clean.sh",
-    "reset": "./scripts/reset.sh"
+    "reset": "./scripts/reset.sh",
+    "test": "jest --runInBand",
+    "test-suite": "jest --runInBand -t $SUITE"
   },
   "devDependencies": {
     "@types/crypto-js": "^3.1.47",
+    "@types/jest": "^26.0.12",
     "@types/node": "^12.7.8",
+    "jest": "^26.4.2",
+    "jest-junit": "^11.1.0",
+    "ts-jest": "^24.3.0",
     "typescript": "^3.6.3"
   }
 }
