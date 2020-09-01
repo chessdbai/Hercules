@@ -63,16 +63,6 @@ export class BuildProject extends cdk.Construct {
       }
     };
     
-    this.reportGroups = {
-      api: createDotNetDualReportGroups               (this, buildReportsBucket, 'hercules-api'),
-      typeScriptAwsClientCore: createDotNetDualReportGroups(this, buildReportsBucket, 'aws-ts-client-core'),
-      triggers: createDotNetDualReportGroups          (this, buildReportsBucket, 'hercules-triggers'),
-      dotnetClient: createDotNetDualReportGroups      (this, buildReportsBucket, 'hercules-dotnet-client'),
-      model: createDotNetDualReportGroups             (this, buildReportsBucket, 'hercules-api-model'),
-      website: createDotNetDualReportGroups           (this, buildReportsBucket, 'hercules-website'),
-      typeScriptClient: createDotNetDualReportGroups  (this, buildReportsBucket, 'hercules-typescript-client'),
-    }
-
     const buildRole = new iam.Role(this, 'BuildRole', {
       assumedBy: new iam.CompositePrincipal(
         new iam.ServicePrincipal('codebuild.amazonaws.com'),
@@ -142,6 +132,7 @@ export class BuildProject extends cdk.Construct {
 
     const artifactRepoPolicy = new iam.PolicyStatement();
     artifactRepoPolicy.addActions('codeartifact:GetRepositoryEndpoint');
+    artifactRepoPolicy.addActions('codeartifact:GetRepositoryEndpoint');
     artifactRepoPolicy.addResources('arn:aws:codeartifact:us-east-2:407299974961:repository/chessdb/chessdb-and-npm');
     artifactRepoPolicy.addResources('arn:aws:codeartifact:us-east-2:407299974961:domain/chessdb/*');
     
@@ -162,7 +153,8 @@ export class BuildProject extends cdk.Construct {
     buildRole.addToPolicy(bucketPolicy);
     buildRole.addToPolicy(kmsPolicy);
     buildRole.addToPolicy(codeBuildPolicy);
-
+    buildRole.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AWSCodeArtifactAdminAccess'));
+    
     this.project = buildProject;
   }
 }

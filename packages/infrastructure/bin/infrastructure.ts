@@ -36,7 +36,7 @@ accounts.ACCOUNTS.forEach(account => {
   });
 });
 
-new stacks.CicdStack(app, `CicdStack`, {
+new stacks.CicdStack(app, `HerculesCicdStack`, {
   env: accounts.DeployAccountEnv,
   accounts: accounts.ACCOUNTS
 });

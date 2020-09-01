@@ -2,4 +2,4 @@
 set -euxo pipefail
 
 yarn run build
-cdk deploy --profile chessdb-deploy CicdStack --require-approval never
+cdk deploy --profile chessdb-deploy HerculesCicd --require-approval never
