@@ -1,5 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import * as iam from '@aws-cdk/aws-iam';
+import * as kms from '@aws-cdk/aws-kms';
 import * as sns from '@aws-cdk/aws-sns';
 import * as codebuild from '@aws-cdk/aws-codebuild';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
@@ -25,6 +26,11 @@ export class CicdStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: CicdStackProps) {
     super(scope, id, props);
 
+    const artifactKey = new kms.Key(this, 'ArtifactKey', {
+      alias: 'hercules-artifact-key',
+      enableKeyRotation: true
+    });
+
     const approvalTopicArn = cdk.Fn.importValue('PlumberApprovalsTopicArn');
     const notificationsTopicArn = cdk.Fn.importValue('PlumberNotificationsTopicArn');
     
@@ -34,7 +40,7 @@ export class CicdStack extends cdk.Stack {
 
     const pipeline = new codepipeline.Pipeline(this, 'Pipeline', {
       pipelineName: 'Hercules',
-
+      
     });
 
     const sourceOutput = new codepipeline.Artifact('sourceOutput');
@@ -49,7 +55,7 @@ export class CicdStack extends cdk.Stack {
     }));
 
     const buildProject = new BuildProject(this, 'BuildProject', {
-
+      artifactKey: artifactKey
     });
 
     const buildOutput = new codepipeline.Artifact('buildOutput');
@@ -79,6 +85,7 @@ export class CicdStack extends cdk.Stack {
 
     const deployProject = new codebuild.PipelineProject(this, 'DeployProject', {
       role: deployRole,
+      encryptionKey: artifactKey,
       buildSpec: codebuild.BuildSpec.fromSourceFilename('packages/infrastructure/build/buildspec.yml')
     });
 

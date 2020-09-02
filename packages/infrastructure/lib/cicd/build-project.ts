@@ -21,6 +21,7 @@ interface ReportGroups {
 }
 
 interface BuildProjectProps {
+  artifactKey: kms.IKey
 }
 
 export class BuildProject extends cdk.Construct {
@@ -76,6 +77,7 @@ export class BuildProject extends cdk.Construct {
         buildImage: codebuild.LinuxBuildImage.STANDARD_4_0,
         privileged: true
       },
+      encryptionKey: props.artifactKey,
       role: buildRole
     });
 
