@@ -78,7 +78,8 @@ export class CicdStack extends cdk.Stack {
     deployRole.addToPolicy(deployAssumeRolePolicy);
 
     const deployProject = new codebuild.PipelineProject(this, 'DeployProject', {
-      role: deployRole
+      role: deployRole,
+      buildSpec: codebuild.BuildSpec.fromSourceFilename('packages/infrastructure/build/buildspec.yml')
     });
 
     props.accounts.forEach(acc => {
