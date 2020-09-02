@@ -55,7 +55,7 @@ reports:
       - test-reports/api-client-typescript/coverage.xml
     base-directory: location
     discard-paths: yes
-    file-format: CoberturaXml
+    file-format: CloverXml
   'arn:aws:codebuild:us-east-2:667342691845:report-group/aws-ts-client-core-tests':
     files:
       - test-reports/aws-api-client-core/test-results.xml
@@ -67,7 +67,7 @@ reports:
       - test-reports/aws-api-client-core/coverage.xml
     base-directory: location
     discard-paths: yes
-    file-format: CoberturaXml
+    file-format: CloverXml
 artifacts:
   files:
     - packages/infrastructure/build
