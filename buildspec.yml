@@ -18,47 +18,47 @@ phases:
     commands:
       - npm i
       - npm run release
-reports:
-  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-dotnet-client-tests':
-    files:
-      - test-reports/Hercules.Api.Client/test-results.xml
-    discard-paths: yes
-    file-format: JunitXml
-  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-dotnet-client-coverage':
-    files:
-      - test-reports/Hercules.Api.Client/coverage.xml
-    discard-paths: yes
-    file-format: CoberturaXml
-  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-api-model-tests':
-    files:
-      - test-reports/Hercules.Api.Model/test-results.xml
-    discard-paths: yes
-    file-format: JunitXml
-  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-api-model-coverage':
-    files:
-      - test-reports/Hercules.Api.Model/coverage.xml
-    discard-paths: yes
-    file-format: CoberturaXml
-  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-typescript-client-tests':
-    files:
-      - test-reports/api-client-typescript/test-results.xml
-    discard-paths: yes
-    file-format: JunitXml
-  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-typescript-client-coverage':
-    files:
-      - test-reports/api-client-typescript/coverage.xml
-    discard-paths: yes
-    file-format: CloverXml
-  'arn:aws:codebuild:us-east-2:667342691845:report-group/aws-ts-client-core-tests':
-    files:
-      - test-reports/aws-api-client-core/test-results.xml
-    discard-paths: yes
-    file-format: JunitXml
-  'arn:aws:codebuild:us-east-2:667342691845:report-group/aws-ts-client-core-coverage':
-    files:
-      - test-reports/aws-api-client-core/coverage.xml
-    discard-paths: yes
-    file-format: CloverXml
+#reports:
+#  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-dotnet-client-tests':
+#    files:
+#      - test-reports/Hercules.Api.Client/test-results.xml
+#    discard-paths: yes
+#    file-format: JunitXml
+#  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-dotnet-client-coverage':
+#    files:
+#      - test-reports/Hercules.Api.Client/coverage.xml
+#    discard-paths: yes
+#    file-format: CoberturaXml
+#  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-api-model-tests':
+#    files:
+#      - test-reports/Hercules.Api.Model/test-results.xml
+#    discard-paths: yes
+#    file-format: JunitXml
+#  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-api-model-coverage':
+#    files:
+#      - test-reports/Hercules.Api.Model/coverage.xml
+#    discard-paths: yes
+#    file-format: CoberturaXml
+#  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-typescript-client-tests':
+#    files:
+#      - test-reports/api-client-typescript/test-results.xml
+#    discard-paths: yes
+#    file-format: JunitXml
+#  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-typescript-client-coverage':
+#    files:
+#      - test-reports/api-client-typescript/coverage.xml
+#    discard-paths: yes
+#    file-format: CloverXml
+#  'arn:aws:codebuild:us-east-2:667342691845:report-group/aws-ts-client-core-tests':
+#    files:
+#      - test-reports/aws-api-client-core/test-results.xml
+#    discard-paths: yes
+#    file-format: JunitXml
+#  'arn:aws:codebuild:us-east-2:667342691845:report-group/aws-ts-client-core-coverage':
+#    files:
+#      - test-reports/aws-api-client-core/coverage.xml
+#    discard-paths: yes
+#    file-format: CloverXml
 artifacts:
   files:
     - packages/infrastructure/build/*

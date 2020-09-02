@@ -137,5 +137,37 @@ export class CicdStack extends cdk.Stack {
       });
     });
 
+    new codestarnotifications.CfnNotificationRule(this, 'Notifications', {
+      name: 'HerculesNotifications',
+      status: 'ENABLED',
+      resource: pipeline.pipelineArn,
+      targets: [
+        {
+          targetType: 'SNS',
+          targetAddress: notificationsTopicArn
+        }
+      ],
+      detailType: 'FULL',
+      eventTypeIds: [
+        'codepipeline-pipeline-action-execution-succeeded',
+        'codepipeline-pipeline-action-execution-failed',
+        'codepipeline-pipeline-action-execution-canceled',
+        'codepipeline-pipeline-action-execution-started',
+        'codepipeline-pipeline-stage-execution-started',
+        'codepipeline-pipeline-stage-execution-succeeded',
+        'codepipeline-pipeline-stage-execution-resumed',
+        'codepipeline-pipeline-stage-execution-canceled',
+        'codepipeline-pipeline-stage-execution-failed',
+        'codepipeline-pipeline-pipeline-execution-failed',
+        'codepipeline-pipeline-pipeline-execution-canceled',
+        'codepipeline-pipeline-pipeline-execution-started',
+        'codepipeline-pipeline-pipeline-execution-resumed',
+        'codepipeline-pipeline-pipeline-execution-succeeded',
+        'codepipeline-pipeline-pipeline-execution-superseded',
+        'codepipeline-pipeline-manual-approval-failed',
+        'codepipeline-pipeline-manual-approval-needed',
+        'codepipeline-pipeline-manual-approval-succeeded'
+      ]
+    });
   }
 }

@@ -16,5 +16,8 @@
   "private": true,
   "devDependencies": {
     "lerna": "^3.22.1"
+  },
+  "dependencies": {
+    "react-router-dom": "^5.2.0"
   }
 }
