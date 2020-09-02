@@ -1,4 +1,5 @@
 import * as cdk from '@aws-cdk/core';
+import * as iam from '@aws-cdk/aws-iam';
 import * as sns from '@aws-cdk/aws-sns';
 import * as codebuild from '@aws-cdk/aws-codebuild';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
@@ -65,8 +66,19 @@ export class CicdStack extends cdk.Stack {
       runOrder: 1
     }));
 
-    const deployProject = new codebuild.PipelineProject(this, 'DeployProject', {
+    const deployRole = new iam.Role(this, 'DeployProjectRole', {
+      assumedBy: new iam.CompositePrincipal(
+        new iam.ServicePrincipal('codebuild.amazonaws.com'),
+        new iam.ServicePrincipal('codebuild.amazonaws.com')
+      )
+    });
+    const deployAssumeRolePolicy = new iam.PolicyStatement();
+    deployAssumeRolePolicy.addActions('sts:AssumeRole');
+    deployAssumeRolePolicy.addAllResources();
+    deployRole.addToPolicy(deployAssumeRolePolicy);
 
+    const deployProject = new codebuild.PipelineProject(this, 'DeployProject', {
+      role: deployRole
     });
 
     props.accounts.forEach(acc => {

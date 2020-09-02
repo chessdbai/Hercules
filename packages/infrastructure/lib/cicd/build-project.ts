@@ -79,6 +79,7 @@ export class BuildProject extends cdk.Construct {
       role: buildRole
     });
 
+    /*
     this.reportGroups = {
       api: createDotNetDualReportGroups               (this, buildReportsBucket, 'hercules-api'),
       typeScriptAwsClientCore: createDotNetDualReportGroups(this, buildReportsBucket, 'aws-ts-client-core'),
@@ -88,6 +89,7 @@ export class BuildProject extends cdk.Construct {
       website: createDotNetDualReportGroups           (this, buildReportsBucket, 'hercules-website'),
       typeScriptClient: createDotNetDualReportGroups  (this, buildReportsBucket, 'hercules-typescript-client'),
     }
+    */
 
     const reportingPolicy = new iam.PolicyStatement();
     reportingPolicy.addActions(
