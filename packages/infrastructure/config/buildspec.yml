@@ -15,7 +15,7 @@ phases:
       - export AWS_ACCESS_KEY_ID=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.AccessKeyId')
       - export AWS_SECRET_ACCESS_KEY=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SecretAccessKey')
       - export AWS_SESSION_TOKEN=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SessionToken')
-      - cdk deploy --app "$CODEBUILD_SRC_DIR" $STACK_NAME --require-approval never
+      - cdk deploy --app "$CODEBUILD_SRC_DIR/packages/infrastructure/build/" $STACK_NAME --require-approval never
   build:
     commands:
       - npm i

@@ -62,4 +62,4 @@ phases:
 artifacts:
   files:
     - packages/infrastructure/build/*
-  discard-paths: yes
+  discard-paths: no
