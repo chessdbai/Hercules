@@ -8,7 +8,7 @@ import * as s3_deploy from '@aws-cdk/aws-s3-deployment';
 import * as cloudfront from '@aws-cdk/aws-cloudfront';
 import * as path from 'path';
 
-const websitePath = path.resolve(path.join(__dirname, '../../../website/dist'))
+const websitePath = path.resolve(path.join(__dirname, '../../../website/build'))
 
 interface WebsiteProps {
   domainName: string,
