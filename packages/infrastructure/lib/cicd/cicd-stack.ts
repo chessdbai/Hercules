@@ -1,4 +1,5 @@
 import * as cdk from '@aws-cdk/core';
+import * as s3 from '@aws-cdk/aws-s3';
 import * as iam from '@aws-cdk/aws-iam';
 import * as kms from '@aws-cdk/aws-kms';
 import * as sns from '@aws-cdk/aws-sns';
@@ -26,21 +27,29 @@ export class CicdStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: CicdStackProps) {
     super(scope, id, props);
 
+    const myAccountPrincipal = new iam.AccountPrincipal(props.env!.account);
     const artifactKey = new kms.Key(this, 'ArtifactKey', {
       alias: 'hercules-artifact-key',
       enableKeyRotation: true
     });
+    artifactKey.grantEncryptDecrypt(myAccountPrincipal);
 
     const approvalTopicArn = cdk.Fn.importValue('PlumberApprovalsTopicArn');
     const notificationsTopicArn = cdk.Fn.importValue('PlumberNotificationsTopicArn');
-    
+
     const herculesRepo = new codecommit.Repository(this, 'Repo', {
       repositoryName: 'hercules'
     });
 
+    const artifactBucket = new s3.Bucket(this, 'ArtifactBucket', {
+      encryptionKey: artifactKey
+    });
+    artifactBucket.grantReadWrite(myAccountPrincipal);
+    artifactBucket.grantDelete(myAccountPrincipal);
+
     const pipeline = new codepipeline.Pipeline(this, 'Pipeline', {
       pipelineName: 'Hercules',
-      
+      artifactBucket: artifactBucket
     });
 
     const sourceOutput = new codepipeline.Artifact('sourceOutput');
