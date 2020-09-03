@@ -10,7 +10,7 @@ phases:
       - echo "Installing the AWS CDK"
       - npm install -g aws-cdk
       - echo "Installing the Lambda CLI plugin"
-      - dotnet tool install Amazon.Lambda.Tools
+      - dotnet tool install -g Amazon.Lambda.Tools
   pre_build:
     commands:
       - aws codeartifact login --tool npm --repository chessdb-and-npm --domain chessdb --domain-owner 407299974961 --region us-east-2
