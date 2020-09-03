@@ -1,4 +1,6 @@
 import React from 'react';
+import { Auth } from 'aws-amplify';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 import { Form, Input, Button, Checkbox, PageHeader, Layout } from 'antd';
 import { useHistory } from "react-router-dom";
 
@@ -14,8 +16,19 @@ export default function LoginPage() {
 
   let history = useHistory();
 
-  const onFinish = (values : string[]) => {
-    console.log('Success:', values);
+  const onFinish = async (values : string[]) => {
+    const username = values[0];
+    const password = values[1];
+    try {
+      var response = await Auth.signIn({
+        username: username,
+        password: password
+      })!;
+      const user = response as CognitoUser;
+    } catch (err) {
+      const error = err as Error;
+      console.error(error);
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {

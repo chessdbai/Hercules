@@ -10,7 +10,7 @@ phases:
       - echo "Installing the AWS CDK"
       - npm install -g aws-cdk
       - echo "Installing the Lambda CLI plugin"
-      - dotnet tool install -g Amazon.Lambda.Tools
+      - dotnet tool install Amazon.Lambda.Tools
   pre_build:
     commands:
       - aws codeartifact login --tool npm --repository chessdb-and-npm --domain chessdb --domain-owner 407299974961 --region us-east-2
@@ -18,9 +18,6 @@ phases:
     commands:
       - npm i
       - npm run release
-      - rm -rf ./packages/infrastructure/node_modules || true
-      - rm -rf ./packages/infrastructure/build || true
-      - rm -rf ./packages/infrastructure/cdk.out || true
 #reports:
 #  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-dotnet-client-tests':
 #    files:
@@ -64,5 +61,5 @@ phases:
 #    file-format: CloverXml
 artifacts:
   files:
-    - packages/infrastructure/**/*
+    - packages/infrastructure/build/**/*
   discard-paths: no

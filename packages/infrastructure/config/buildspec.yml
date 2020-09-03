@@ -6,7 +6,7 @@ phases:
       nodejs: 12
     commands:
       - echo "Installing the AWS CDK"
-      - npm install -g aws-cdk
+      - npm install -g aws-cdk@1.61.1
   pre_build:
     commands:
       - cd packages/infrastructure
