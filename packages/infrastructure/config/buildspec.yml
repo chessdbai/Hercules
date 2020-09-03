@@ -9,6 +9,8 @@ phases:
       - npm install -g aws-cdk@1.61.1
   pre_build:
     commands:
+      - cd packages/infrastructure
+      - npm i
       - TEMP_ROLE=`aws sts assume-role --role-arn $DEPLOYMENT_ROLE_ARN --role-session-name test`
       - export TEMP_ROLE
       - echo $TEMP_ROLE
@@ -16,7 +18,7 @@ phases:
       - export AWS_SECRET_ACCESS_KEY=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SecretAccessKey')
       - export AWS_SESSION_TOKEN=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.SessionToken')
       - cdk bootstrap aws://${DESTINATION_ACCOUNT}/${DESTINATION_REGION}
-      - cdk deploy --app "$CODEBUILD_SRC_DIR/packages/infrastructure/build/" $STACK_NAME --require-approval never
+      - cdk deploy $STACK_NAME --require-approval never
   build:
     commands:
       - npm i

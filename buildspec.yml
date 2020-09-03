@@ -18,6 +18,9 @@ phases:
     commands:
       - npm i
       - npm run release
+      - rm -rf ./packages/infrastructure/node_modules || true
+      - rm -rf ./packages/infrastructure/build || true
+      - rm -rf ./packages/infrastructure/cdk.out || true
 #reports:
 #  'arn:aws:codebuild:us-east-2:667342691845:report-group/hercules-dotnet-client-tests':
 #    files:
@@ -61,5 +64,5 @@ phases:
 #    file-format: CloverXml
 artifacts:
   files:
-    - packages/infrastructure/build/**/*
+    - packages/infrastructure/**/*
   discard-paths: no
