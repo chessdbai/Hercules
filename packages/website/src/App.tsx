@@ -1,45 +1,42 @@
-import React, { FC } from 'react';
-import { Layout } from 'antd';
+import React, { FC, useState } from 'react';
+import { Layout, Breadcrumb, Menu } from 'antd';
 import AppSideMenu from './AppSideMenu';
 import AppTopMenu from './AppTopMenu';
-
 import ContentRouter from './ContentRouter';
 import {
   BrowserRouter as Router
 } from "react-router-dom";
-import './App.css';
 
+const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
-const App: FC = () => (
-  <Layout style={{width: '100%', height: '100%'}}>
-    <Router>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={broken => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
-        <div className="logo" />
-        <AppSideMenu />
-      </Sider>
-      <Layout>
-        <Header className="site-layout-sub-header-background" style={{ padding: 0 }}>
+const App: FC = () => {
+
+  return (
+    <Layout>
+      <Router>
+        <Header className="header">
+          <div className="logo" />
           <AppTopMenu />
         </Header>
-        <Content style={{ margin: '24px 16px 0' }}>
-          <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+        <Content style={{ padding: '0 50px' }}>
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>List</Breadcrumb.Item>
+            <Breadcrumb.Item>App</Breadcrumb.Item>
+          </Breadcrumb>
+          <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
+            <Sider className="site-layout-background" width={200}>
+              <AppSideMenu />
+            </Sider>
             <ContentRouter />
-          </div>
+          </Layout>
         </Content>
         <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
-      </Layout>
-    </Router>
-  </Layout>
-);
+      </Router>
+    </Layout>
+  )
+
+}
 
 export default App;

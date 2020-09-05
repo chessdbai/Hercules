@@ -61,5 +61,4 @@ phases:
 #    file-format: CloverXml
 artifacts:
   files:
-    - packages/infrastructure/build/**/*
-  discard-paths: no
+    - packages/infrastructure/**/*

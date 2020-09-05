@@ -15,6 +15,12 @@ export default function ContentRouter() {
           <Route path="/user/register">
             <pages.RegisterPage />
           </Route>
+          <Route path="/guide">
+            <pages.GuidePage />
+          </Route>
+          <Route path="/search">
+            <pages.SearchPage />
+          </Route>
           <Route path="/account">
             <pages.AccountPage />
           </Route>

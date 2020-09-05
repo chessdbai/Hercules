@@ -7,7 +7,11 @@ function AppSideMenu() {
   let history = useHistory();
 
   return (
-    <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+    <Menu
+      theme="dark"
+      mode="inline"
+      defaultSelectedKeys={['1']}
+      style={{ height: '100%' }}>
       <Menu.Item key="1" icon={<UserOutlined />} onClick={(e) => history.push('/home')}>
         Home
       </Menu.Item>
