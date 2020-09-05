@@ -26,12 +26,12 @@ accounts.ACCOUNTS.forEach(account => {
   });
   new stacks.WebsiteStack(app, `Website${suffix}`, {
     env: env,
-    domainName: 'chessdb.ai',
+    domainName: account.domainName,
     publicZoneId: account.publicZoneId
   });
   new stacks.ApiStack(app, `Api${suffix}`, {
     env: env,
-    domainName: 'chessdb.ai',
+    domainName: account.domainName,
     publicZoneId: account.publicZoneId
   });
 });

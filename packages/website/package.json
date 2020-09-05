@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@ant-design/dark-theme": "^2.0.2",
+    "@elastic/react-search-ui": "^1.4.1",
+    "@elastic/react-search-ui-views": "^1.4.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",

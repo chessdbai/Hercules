@@ -21,5 +21,9 @@
   },
   "include": [
     "src"
+  ],
+  "files": [
+    "typings/@elastic/react-search-ui/index.d.ts",
+    "typings/@elastic/react-search-ui-views/index.d.ts"
   ]
 }
