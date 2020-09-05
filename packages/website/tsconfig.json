@@ -23,6 +23,7 @@
     "src"
   ],
   "files": [
+    "typings/IntlTelInput.d.ts",
     "typings/@elastic/react-search-ui/index.d.ts",
     "typings/@elastic/react-search-ui-views/index.d.ts"
   ]

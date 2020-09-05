@@ -67,7 +67,8 @@ export class Auth extends cdk.Construct {
       },
       autoVerify: {
         email: true
-      }
+      },
+      selfSignUpEnabled: true
     });
     const cfnUserPool = this.userPool.node.defaultChild as cognito.CfnUserPool;
     cfnUserPool.mfaConfiguration = 'OPTIONAL';

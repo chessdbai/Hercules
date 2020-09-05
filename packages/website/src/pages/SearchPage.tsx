@@ -161,8 +161,8 @@ export default function SearchPage() {
       <PageHeader
         className="site-page-header"
         onBack={() => null}
-        title="About Page"
-        subTitle="What is ChessDB.ai?">
+        title="Home"
+        subTitle="Search for anything related to chess">
           <SearchProvider config={config}>
             <WithSearch mapContextToProps={(par: any) => ({ par })}>
               {(x: any) => {

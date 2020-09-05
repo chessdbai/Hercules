@@ -43,7 +43,7 @@ const HerculesProd : HerculesAccount = {
   replyToEmailArn: 'arn:aws:ses:us-east-1:541249553451:identity/no-reply@chessdb.ai',
   replyToEmail: 'no-reply@chessdb.ai',
   publicZoneId: '/hostedzone/Z00725913JABR2S4TT8ZI',
-  deploymentRole: betaAccount.deploymentRole
+  deploymentRole: prodAccount.deploymentRole
 };
 
 const DeployAccountEnv : cdk.Environment = {

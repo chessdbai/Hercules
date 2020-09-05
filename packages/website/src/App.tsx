@@ -6,6 +6,7 @@ import ContentRouter from './ContentRouter';
 import {
   BrowserRouter as Router
 } from "react-router-dom";
+import "./config/auth-config";
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;

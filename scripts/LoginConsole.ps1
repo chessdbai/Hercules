@@ -45,6 +45,9 @@ Function Create-ConsoleRole {
       -AssumeRolePolicyDocument $trustPolicy `
       -Description "Role for Console access via the Token Hopper tool." `
       -MaxSessionDuration 43200
+  Register-IAMRolePolicy `
+      -RoleName TokenHopperConsoleRole `
+      -PolicyArn "arn:aws:iam::aws:policy/AdministratorAccess"
 }
 
 Function Get-ConsoleLoginRole {
