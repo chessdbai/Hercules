@@ -13,7 +13,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const App: FC = () => {
 
   return (
-    <Layout>
+    <Layout style={{height: '100%', width: '100%'}}>
       <Router>
         <Header className="header">
           <div className="logo" />
@@ -25,14 +25,14 @@ const App: FC = () => {
             <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item>
           </Breadcrumb>
-          <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
+          <Layout className="site-layout-background" style={{ height: '100%', width: '100%' }}>
             <Sider className="site-layout-background" width={200}>
               <AppSideMenu />
             </Sider>
             <ContentRouter />
           </Layout>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        <Footer style={{ textAlign: 'center' }}>ChessDB.ai ©2020</Footer>
       </Router>
     </Layout>
   )

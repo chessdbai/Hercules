@@ -95,7 +95,7 @@ export class CicdStack extends cdk.Stack {
     const deployProject = new codebuild.PipelineProject(this, 'DeployProject', {
       role: deployRole,
       encryptionKey: artifactKey,
-      buildSpec: codebuild.BuildSpec.fromSourceFilename('packages/infrastructure/build/buildspec.yml')
+      buildSpec: codebuild.BuildSpec.fromSourceFilename('packages/infrastructure/cdk.out/buildspec.yml')
     });
 
     props.accounts.forEach(acc => {

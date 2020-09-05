@@ -7,7 +7,7 @@ import * as pages from './pages';
 
 export default function ContentRouter() {
   return (
-      <div>
+      <div style={{width: '100%', height: '100%'}}>
         <Switch>
           <Route path="/user/login">
             <pages.LoginPage />

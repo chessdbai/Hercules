@@ -8,7 +8,7 @@ phases:
       python: 3.8
     commands:
       - echo "Installing the AWS CDK"
-      - npm install -g aws-cdk
+      - npm install -g aws-cdk@1.62.0
       - echo "Installing the Lambda CLI plugin"
       - dotnet tool install -g Amazon.Lambda.Tools
   pre_build:
@@ -61,4 +61,4 @@ phases:
 #    file-format: CloverXml
 artifacts:
   files:
-    - packages/infrastructure/**/*
+    - packages/infrastructure/cdk.out/**/*
