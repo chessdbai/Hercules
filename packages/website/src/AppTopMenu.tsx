@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
-import { SearchOutlined, FileSearchOutlined, CodepenCircleOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  HomeOutlined,
+  SearchOutlined,
+  FileSearchOutlined,
+  SmileOutlined,
+  UserOutlined,
+  ExperimentOutlined
+} from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
 
 function AppTopMenu() {
@@ -10,23 +17,35 @@ function AppTopMenu() {
 
   return (
     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[current]}>
-      <Menu.Item key="mail" icon={<SearchOutlined />} style={{float: 'left'}} onClick={() => {
-        setCurrent('search');
-        history.push('/search');
+      <Menu.Item key="home" icon={<HomeOutlined />} style={{float: 'left'}} onClick={() => {
+        setCurrent('home');
+        history.push('/');
       }}>
-        Search
+        Home
       </Menu.Item>
-      <Menu.Item key="guide" icon={<FileSearchOutlined />} style={{float: 'left'}} onClick={() => {
-        setCurrent('guide');
-        history.push('/guide');
+      <Menu.Item key="database" icon={<SearchOutlined />} style={{float: 'left'}} onClick={() => {
+        setCurrent('database');
+        history.push('/database');
       }}>
-        Guide
+        Database
       </Menu.Item>
-      <Menu.Item key="develop" icon={<CodepenCircleOutlined />} style={{float: 'left'}} onClick={() => {
-        setCurrent('develop');
-        history.push('/develop');
+      <Menu.Item key="analysis" icon={<ExperimentOutlined />} style={{float: 'left'}} onClick={() => {
+        setCurrent('analysis');
+        history.push('/analysis');
       }}>
-        Develop
+        Analysis
+      </Menu.Item>
+      <Menu.Item key="mychess" icon={<SmileOutlined />} style={{float: 'left'}} onClick={() => {
+        setCurrent('mychess');
+        history.push('/user/chess');
+      }}>
+        My Chess
+      </Menu.Item>
+      <Menu.Item key="help" icon={<FileSearchOutlined />} style={{float: 'left'}} onClick={() => {
+        setCurrent('help');
+        history.push('/help');
+      }}>
+        Help
       </Menu.Item>
       <Menu.Item key="userLoginRegister" icon={<UserOutlined />} style={{float: 'right'}} onClick={() => {
         setCurrent('userLoginRegister');

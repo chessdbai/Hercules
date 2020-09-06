@@ -7,7 +7,7 @@ export default function Home() {
   history.location.toString();
 
   return (
-    <Layout>
+    <Layout style={{width: '100%', height: '100%'}}>
       <PageHeader
         className="site-page-header"
         onBack={() => null}

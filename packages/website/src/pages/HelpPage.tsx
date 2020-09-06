@@ -2,7 +2,7 @@ import React from 'react';
 import { PageHeader, Layout } from 'antd';
 import { useHistory } from "react-router-dom";
 
-export default function About() {
+export default function HelpPage() {
   let history = useHistory();
   history.location.toString();
 

@@ -16,7 +16,8 @@ accounts.ACCOUNTS.forEach(account => {
   };
   new stacks.CoreStack(app, `Core${suffix}`, {
     env: env,
-    domainName: account.domainName
+    domainName: account.domainName,
+    stage: account.stage
   });
   new stacks.AuthStack(app, `Auth${suffix}`, {
     env: env,

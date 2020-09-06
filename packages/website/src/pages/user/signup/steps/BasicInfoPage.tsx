@@ -1,14 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Auth } from 'aws-amplify';
 import {
-  AutoComplete, Form, Select, Button, Checkbox,
-  Input, Tooltip, PageHeader, Layout 
+  Form,
+  Select,
+  Button,
+  Checkbox,
+  Input
 } from 'antd';
 import 'react-intl-tel-input/dist/main.css';
-import { sanitizeNumberForCognito } from './PhoneNumberUtils';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { sanitizeNumberForCognito } from '../../PhoneNumberUtils';
 import IntlTelInput, { SelectedCountryInputValue } from 'react-intl-tel-input';
-const { Option } = Select;
 
 export interface NewUserInfo {
   termsAndConditionsAgreed: boolean,
@@ -131,12 +132,6 @@ const RegistrationForm = () => {
   }));
 
   return (
-    <Layout>
-      <PageHeader
-        className="site-page-header"
-        onBack={() => null}
-        title="Register"
-        subTitle="Join the best chess knowledgebase in the world - for free!" />
       <Form
         {...formItemLayout}
         name="register"
@@ -278,7 +273,6 @@ const RegistrationForm = () => {
           </Button>
         </Form.Item>
       </Form>
-    </Layout>
   );
 };
 

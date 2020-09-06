@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ag-grid-community/all-modules": "^23.2.1",
+    "@ag-grid-community/core": "^23.2.1",
+    "@ag-grid-community/react": "^23.2.1",
     "@ant-design/dark-theme": "^2.0.2",
     "@elastic/react-search-ui": "^1.4.1",
     "@elastic/react-search-ui-views": "^1.4.1",
@@ -21,6 +24,7 @@
     "react-intl-tel-input": "^8.0.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-stripe-elements": "^6.1.2",
     "typescript": "~3.7.2"
   },
   "scripts": {
@@ -43,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-stripe-elements": "^6.0.4"
   }
 }

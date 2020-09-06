@@ -1,17 +1,19 @@
 import HomePage from './HomePage';
 import AboutPage from './AboutPage';
-import AccountPage from './AccountPage';
-import GuidePage from './GuidePage';
-import SearchPage from './SearchPage';
+import HelpPage from './HelpPage';
+import AnalysisPage from './AnalysisPage';
+import DatabasePage from './database';
+import MyChessPage from './my';
 import LoginPage from './user/LoginPage';
-import RegisterPage from './user/RegisterPage';
+import RegisterPage from './user/signup/RegistrationPage';
 
 export {
   HomePage,
   AboutPage,
-  AccountPage,
   LoginPage,
   RegisterPage,
-  GuidePage,
-  SearchPage
+  HelpPage,
+  MyChessPage,
+  DatabasePage,
+  AnalysisPage
 };

@@ -13,7 +13,8 @@ import {
   ResultsPerPage,
   Paging,
   Sorting,
-  WithSearch
+  WithSearch,
+  SortingOptions
 } from "@elastic/react-search-ui";
 
 import {
@@ -26,7 +27,7 @@ import "@elastic/react-search-ui-views/lib/styles/styles.css";
 
 const connector : any = {};
 
-const SORT_OPTIONS = [
+const SORT_OPTIONS : SortingOptions[] = [
   {
     name: "Relevance",
     value: "",

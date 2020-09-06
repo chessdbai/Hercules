@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Layout, Breadcrumb, Menu } from 'antd';
-import AppSideMenu from './AppSideMenu';
+import AppSideMenu from './pages/database/DatabaseSideMenu';
 import AppTopMenu from './AppTopMenu';
 import ContentRouter from './ContentRouter';
 import {
@@ -20,20 +20,11 @@ const App: FC = () => {
           <div className="logo" />
           <AppTopMenu />
         </Header>
-        <Content style={{ padding: '0 50px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
+        <Content style={{height: '100%'}}>
           <Layout className="site-layout-background" style={{ height: '100%', width: '100%' }}>
-            <Sider className="site-layout-background" width={200}>
-              <AppSideMenu />
-            </Sider>
             <ContentRouter />
           </Layout>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>ChessDB.ai ©2020</Footer>
       </Router>
     </Layout>
   )

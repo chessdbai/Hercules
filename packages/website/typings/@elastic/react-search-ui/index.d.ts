@@ -8,6 +8,6 @@ declare module '@elastic/react-search-ui' {
   export { ResultsPerPage } from './ResultsPerPage';
   export { SearchBox } from './SearchBox';
   export { SearchProvider } from './SearchProvider';
-  export { Sorting } from './Sorting';
+  export { Sorting, SortingOptions } from './Sorting';
   export { WithSearch } from './WithSearch';
 }

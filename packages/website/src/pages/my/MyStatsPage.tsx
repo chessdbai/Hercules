@@ -2,17 +2,17 @@ import React from 'react';
 import { PageHeader, Layout } from 'antd';
 import { useHistory } from "react-router-dom";
 
-export default function About() {
+export default function MyStatsPage() {
   let history = useHistory();
   history.location.toString();
 
   return (
-    <Layout style={{width: '100%', height: '100%'}}>
+    <Layout>
       <PageHeader
         className="site-page-header"
         onBack={() => null}
-        title="About Page"
-        subTitle="What is ChessDB.ai?"
+        title="Stats"
+        subTitle="You're more than just a number"
       />,
     </Layout>
   );

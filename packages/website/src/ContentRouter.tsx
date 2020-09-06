@@ -9,20 +9,23 @@ export default function ContentRouter() {
   return (
       <div style={{width: '100%', height: '100%'}}>
         <Switch>
+          <Route path="/user/chess">
+            <pages.MyChessPage />
+          </Route>
           <Route path="/user/login">
             <pages.LoginPage />
           </Route>
           <Route path="/user/register">
             <pages.RegisterPage />
           </Route>
-          <Route path="/guide">
-            <pages.GuidePage />
+          <Route path="/help">
+            <pages.HelpPage />
           </Route>
-          <Route path="/search">
-            <pages.SearchPage />
+          <Route path="/database">
+            <pages.DatabasePage />
           </Route>
-          <Route path="/account">
-            <pages.AccountPage />
+          <Route path="/analysis">
+            <pages.AnalysisPage />
           </Route>
           <Route path="/about">
             <pages.AboutPage />

@@ -2,7 +2,7 @@ import React from 'react';
 import { PageHeader, Layout } from 'antd';
 import { useHistory } from "react-router-dom";
 
-export default function GuidePage() {
+export default function MyRepertoirePage() {
   let history = useHistory();
   history.location.toString();
 
@@ -11,8 +11,8 @@ export default function GuidePage() {
       <PageHeader
         className="site-page-header"
         onBack={() => null}
-        title="About Page"
-        subTitle="What is ChessDB.ai?"
+        title="Repertoire"
+        subTitle="Refine your style of the game"
       />,
     </Layout>
   );

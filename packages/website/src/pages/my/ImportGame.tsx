@@ -2,7 +2,7 @@ import React from 'react';
 import { PageHeader, Layout } from 'antd';
 import { useHistory } from "react-router-dom";
 
-export default function Account() {
+export default function MyGamesPage() {
   let history = useHistory();
   history.location.toString();
 
@@ -11,8 +11,8 @@ export default function Account() {
       <PageHeader
         className="site-page-header"
         onBack={() => null}
-        title="Account Information"
-        subTitle="Who are you?"
+        title="Games"
+        subTitle="Organize your Chess Masterpieces"
       />,
     </Layout>
   );
