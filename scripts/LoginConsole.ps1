@@ -92,4 +92,8 @@ $encodedIssuer = [System.Web.HTTPUtility]::UrlEncode($issuer)
 $encodedDestination = [System.Web.HTTPUtility]::UrlEncode($destination)
 
 $signinUrl = "https://signin.aws.amazon.com/federation?Action=login&Issuer=$encodedIssuer&SigninToken=$signinToken&Destination=$encodedDestination"
-[System.Diagnostics.Process]::Start([System.Diagnostics.ProcessStartInfo] @{ FileName = '/Applications/Firefox.app/Contents/MacOS/firefox'; Arguments = @("-private", $signinUrl) })
+Write-Host "Federated sign-in URL:"
+Write-Host $signinUrl
+$escapedUrl = [System.Web.HTTPUtility]::UrlEncode($signinUrl)
+$privateArg = "ext+container:name=$Profile&url=$escapedUrl"
+[System.Diagnostics.Process]::Start([System.Diagnostics.ProcessStartInfo] @{ FileName = '/Applications/Firefox.app/Contents/MacOS/firefox'; Arguments = @($privateArg) })
