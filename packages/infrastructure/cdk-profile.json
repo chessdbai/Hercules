@@ -1,0 +1,4 @@
+{
+  "app": "npx ts-node bin/infrastructure.ts",
+  "plugin": ["cdk-multi-profile-plugin"]
+}

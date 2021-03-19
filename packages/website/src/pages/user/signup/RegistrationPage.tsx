@@ -11,8 +11,11 @@ import {
   SmileOutlined
 } from '@ant-design/icons';
 import * as steps from './steps';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 
 const { Step } = Steps;
+
+
 
 type StepStatus = 'wait' | 'process' | 'finish' | 'error' | undefined;
 type RegistrationStep = 'BasicInfo' | 'ConfirmContact' | 'SelectTier' | 'PaymentDetails' | 'Complete';
@@ -21,17 +24,30 @@ interface RegistrationPageProps {
   
 }
 
+
 const RegistrationPage : FC<RegistrationPageProps> = (p: RegistrationPageProps) => {
 
   let [step, setStep] = useState('BasicInfo' as RegistrationStep);
+  let [user, setUser] = useState({} as CognitoUser);
 
 
   const renderStep = () : React.ReactElement =>
   {
     if (step == 'BasicInfo') {
       return (
-        <steps.BasicInfoPage />
+        <steps.BasicInfoPage onSubmit={(user) => {
+          setUser(user);
+          setStep('ConfirmContact');
+        }}  />
       );
+    } else if (step === 'ConfirmContact') {
+      return (
+        <steps.VerificationForm
+          username={user.getUsername()}
+          onSubmit={async (verificationCode) => {
+            setStep('SelectTier');
+          }} />
+      )
     } else {
       return <></>;
     }
@@ -68,6 +84,7 @@ const RegistrationPage : FC<RegistrationPageProps> = (p: RegistrationPageProps) 
     stepStatus.push('finish');
     stepStatus.push('process');
   }
+  const stepContent = renderStep();
   return (
     <Layout style={{height: '100%', width: '100%'}}>
       <PageHeader
@@ -77,7 +94,7 @@ const RegistrationPage : FC<RegistrationPageProps> = (p: RegistrationPageProps) 
         subTitle="What is ChessDB.ai?"
       />
       <Layout>
-
+        {stepContent}
       </Layout>
       <Layout style={{height: '50', width: '100%'}}>
         <Steps>

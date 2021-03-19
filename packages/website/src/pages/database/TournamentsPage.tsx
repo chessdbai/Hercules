@@ -2,7 +2,7 @@ import React from 'react';
 import { PageHeader, Layout } from 'antd';
 import { useHistory } from "react-router-dom";
 
-export default function TournamentsPage() {
+export default function SearchPage() {
   let history = useHistory();
   history.location.toString();
 
@@ -11,8 +11,8 @@ export default function TournamentsPage() {
       <PageHeader
         className="site-page-header"
         onBack={() => null}
-        title="Tournaments"
-        subTitle="Where chess legends were born"
+        title="Search"
+        subTitle="Find what you're looking for"
       />,
     </Layout>
   );

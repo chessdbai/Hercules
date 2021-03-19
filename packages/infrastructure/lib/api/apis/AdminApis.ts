@@ -7,11 +7,15 @@ import {
 import { 
   createRequestTemplates,
   CommonApiProps,
-  methodResponseForErrorCode,
-  integrationResponseForErrorCode,
+  methodResponseForApiError,
+  integrationResponseForApiError,
   methodResponseForModel,
   CORS_HEADERS
 } from './api-common';
+import {
+  ApiError,
+  makeApiError
+} from './CommonModels';
 
 export interface AdminApisProps extends CommonApiProps { }
 
@@ -19,8 +23,18 @@ export class AdminApis extends Construct {
 
   readonly methods : Method[];
 
+  readonly userNotFoundError : ApiError;
+
   constructor(scope: Construct, id: string, props: AdminApisProps) {
     super(scope, id);
+
+    this.userNotFoundError = makeApiError(
+      this,
+      props,
+      'UserNotFoundError',
+      'The specified user was not found.',
+      404
+    );
 
     const exercisesResource = props.api.root.addResource('admin');
     const userResource = exercisesResource.addResource('user');
@@ -36,7 +50,7 @@ export class AdminApis extends Construct {
           statusCode: '200',
           responseParameters: CORS_HEADERS
         },
-        integrationResponseForErrorCode('400')
+        integrationResponseForApiError(this.userNotFoundError)
       ],
       proxy: false
     }), {
@@ -46,40 +60,13 @@ export class AdminApis extends Construct {
       },
       methodResponses: [
         methodResponseForModel(initializeUserResponseModel),
-        methodResponseForErrorCode('400')
+        methodResponseForApiError(this.userNotFoundError)
       ],
       requestValidator: props.requestValidator
     });
 
-    const deleteUserDataRequestModel = AdminApis.createDeleteUserDataRequestModel(this, props);
-    const deleteUserDataResponseModel = AdminApis.createDeleteUserDataResponseModel(this, props);
-    const deleteUserDataMethod = userResource.addMethod('DELETE', new LambdaIntegration(props.serviceLambda, {
-      requestTemplates: {
-        'application/json': createRequestTemplates('DeleteUserData', AuthorizationType.IAM)
-      },
-      integrationResponses: [
-        {
-          statusCode: '200',
-          responseParameters: CORS_HEADERS
-        },
-        integrationResponseForErrorCode('400')
-      ],
-      proxy: false
-    }), {
-      authorizationType: AuthorizationType.IAM,
-      requestModels: {
-        'application/json': deleteUserDataRequestModel
-      },
-      methodResponses: [
-        methodResponseForModel(deleteUserDataResponseModel),
-        methodResponseForErrorCode('400')
-      ],
-      requestValidator: props.requestValidator
-    });    
-
     this.methods = [
-      initializeUserMethod,
-      deleteUserDataMethod
+      initializeUserMethod
     ];
   }
 
@@ -120,39 +107,4 @@ export class AdminApis extends Construct {
       }
     })
   }
-
-
-  static createDeleteUserDataRequestModel(construct: Construct, props: AdminApisProps) : Model {
-    return new Model(construct, 'DeleteUserDataRequestModel', {
-      restApi: props.api,
-      modelName: 'DeleteUserDataRequest',
-      contentType: 'application/json',
-      schema: {
-        title: 'DeleteUserDataRequest',
-        description: 'Input to DeleteUserData API',
-        properties: {
-          'Username': {
-            type: JsonSchemaType.STRING
-          }
-        },
-        required: [
-          'Username'
-        ]
-      }
-    })
-  }
-
-  static createDeleteUserDataResponseModel(construct: Construct, props: AdminApisProps) : Model {
-    return new Model(construct, 'DeleteUserDataResponseModel', {
-      restApi: props.api,
-      modelName: 'DeleteUserDataResponse',
-      contentType: 'application/json',
-      schema: {
-        title: 'DeleteUserDataResponse',
-        description: 'Output from DeleteUserData API',
-        properties: {
-        }
-      }
-    })
-  }  
 }

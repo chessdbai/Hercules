@@ -15,6 +15,7 @@ namespace Hercules.Api.Client
     using Hercules.Api.Model.Admin;
     using Hercules.Api.Model.Database;
     using Hercules.Api.Model.Health;
+    using Hercules.Api.Model.MyChess;
 
     /// <summary>
     /// The implementation of the <see cref="IHerculesApi"/> interface.
@@ -75,6 +76,16 @@ namespace Hercules.Api.Client
             options.ResponseUnmarshaller = NaturalSearchResponseUnmarshaller.Instance;
             options.EndpointOperation = this.EndpointOperation;
             return await this.InvokeAsync<NaturalSearchResponse>(request, options, CancellationToken.None);
+        }
+
+        /// <inheritdoc cref="IHerculesApi" />
+        public async Task<PutGameResponse> PutGameAsync(PutGameRequest request)
+        {
+            var options = new InvokeOptions();
+            options.RequestMarshaller = PutGameRequestMarshaller.Instance;
+            options.ResponseUnmarshaller = PutGameResponseUnmarshaller.Instance;
+            options.EndpointOperation = this.EndpointOperation;
+            return await this.InvokeAsync<PutGameResponse>(request, options, CancellationToken.None);
         }
 
         /// <inheritdoc cref="AmazonServiceClient" />

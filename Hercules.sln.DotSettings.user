@@ -1,8 +1,21 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=_002FUsers_002Fjohn_002Feunomia_002Fpackages_002Fprojects_002FEunomia_002ENest_002FEunomia_002EElasticsearch_002FElasticsearch_002ENet_002Ecsproj/@EntryIndexedValue">True</s:Boolean>
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ca3ea9a4_002D2993_002D43ba_002Db12e_002Df1e03e4de765/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Display invalid event handled correctly #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::E0AC75D8-B474-4FD4-BC77-F9C12812B453::.NETCoreApp,Version=v3.1::Hercules.Triggers.Tests.FunctionTest.TestFunctionInvalidInputEvent&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
-&lt;/SessionState&gt;</s:String>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	</wpf:ResourceDictionary>

@@ -2,14 +2,11 @@ import React, { ChangeEvent, useState } from 'react';
 import { Auth } from 'aws-amplify';
 import {
   Form,
-  Select,
   Button,
   Checkbox,
   Input
 } from 'antd';
 import 'react-intl-tel-input/dist/main.css';
-import { sanitizeNumberForCognito } from '../../PhoneNumberUtils';
-import IntlTelInput, { SelectedCountryInputValue } from 'react-intl-tel-input';
 
 export interface NewUserInfo {
   termsAndConditionsAgreed: boolean,
@@ -58,16 +55,16 @@ const tailFormItemLayout = {
   },
 };
  
-const RegistrationForm = () => {
+interface RegistrationFormProps {
+  onSubmit: (user: any) => void
+}
+ 
+const RegistrationForm  : React.FC<RegistrationFormProps> = (p: RegistrationFormProps) => {
   const initialRegInfo : NewUserInfo = {
     termsAndConditionsAgreed: true
   }
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-  const [confirmDirty, setConfirmDirty] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [hasSubmittedOnce, setHasSubmittedOnce] = useState(false);
-  const [registrationInfo, setRegistrationInfo] = useState(initialRegInfo);
-  const telRef : React.RefObject<IntlTelInput> = React.createRef();
 
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -78,54 +75,31 @@ const RegistrationForm = () => {
     const email = values.email;
     const firstName = values.firstName;
     const lastName = values.lastName;
-    const phone = registrationInfo.phoneNumber!;
-    await Auth.signUp({
-      username: username, 
-      password: password, 
-      attributes: {
-        given_name: firstName,
-        surname: lastName,
-        email: email,
-        phone_number: phone
-      }
-    });
+    setLoading(true);
+    try {
+      const result = await Auth.signUp({
+        username: username, 
+        password: password, 
+        attributes: {
+          given_name: firstName,
+          family_name: lastName,
+          email: email,
+          name: `${firstName} ${lastName}`,
+          locale: `en-US`
+        }
+      })!;
+      p.onSubmit(result.user);
+    }
+    catch (err) {
+      
+    }
+    setLoading(false);
   };
 
-  const handlePhoneNumberChange = (validated: boolean, phoneNumber: string) => {
-    if (validated) {
-      registrationInfo.phoneNumber = sanitizeNumberForCognito(phoneNumber);
-      setRegistrationInfo(registrationInfo);
-    }
-  }
-
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    registrationInfo.passsword = e.target.value;
-    setRegistrationInfo(registrationInfo);
-  }
   const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
   }
 
-  const handleFirstNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    registrationInfo.firstName = e.target.value;
-    setRegistrationInfo(registrationInfo);
-  }
-
-  const handleLastNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    registrationInfo.lastName = e.target.value;
-    setRegistrationInfo(registrationInfo);
-  }
-
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    registrationInfo.emailAddress = e.target.value;
-    setRegistrationInfo(registrationInfo);
-  }
-
-  const handleTermsAndConditionsCheck = (isChecked: boolean) => {
-    registrationInfo.termsAndConditionsAgreed = isChecked;
-    setRegistrationInfo(registrationInfo);
-  }
- 
   const websiteOptions = autoCompleteResult.map(website => ({
     label: website,
     value: website,
@@ -136,9 +110,6 @@ const RegistrationForm = () => {
         {...formItemLayout}
         name="register"
         onFinish={onFinish}
-        initialValues={{
-          prefix: '86',
-        }}
         scrollToFirstError
       >
 
@@ -161,7 +132,7 @@ const RegistrationForm = () => {
             }),
           ]}
         >
-          <Input onChange={(e: ChangeEvent<HTMLInputElement>) => handleEmailChange(e)}  />
+          <Input />
         </Form.Item>
 
 
@@ -175,7 +146,7 @@ const RegistrationForm = () => {
             },
           ]}
         >
-          <Input onChange={(e: ChangeEvent<HTMLInputElement>) => handleFirstNameChange(e)}  />
+          <Input />
         </Form.Item>
         <Form.Item  
           name="lastName"
@@ -187,7 +158,7 @@ const RegistrationForm = () => {
             },
           ]}
         >
-          <Input onChange={(e: ChangeEvent<HTMLInputElement>) => handleLastNameChange(e)}  />
+          <Input />
         </Form.Item>
 
         <Form.Item
@@ -218,7 +189,7 @@ const RegistrationForm = () => {
           ]}
           hasFeedback
         >
-          <Input.Password onChange={(e) => handlePasswordChange(e)} />
+          <Input.Password />
         </Form.Item>
 
         <Form.Item
@@ -241,20 +212,8 @@ const RegistrationForm = () => {
             }),
           ]}
         >
-        <Input.Password onChange={(e) => handleConfirmPasswordChange(e)} />
+        <Input.Password />
         </Form.Item>
-
-        <Form.Item label="Phone Number">
-          <IntlTelInput
-            ref={telRef}
-            style={{width: '100%'}}
-            onPhoneNumberChange={
-              (validated: boolean,
-              _b: string,
-              selectedCountry: SelectedCountryInputValue,
-              phoneNumber: string) => handlePhoneNumberChange(validated, phoneNumber)} />
-        </Form.Item>
-
         <Form.Item
           name="agreement"
           valuePropName="checked"
@@ -263,7 +222,7 @@ const RegistrationForm = () => {
           ]}
           {...tailFormItemLayout}
         >
-          <Checkbox onChange={(e) => handleTermsAndConditionsCheck(e.target.checked)}>
+          <Checkbox>
             I have read the <a href="">ChessDB user agreement.</a>
           </Checkbox>
         </Form.Item>

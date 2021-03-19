@@ -6,12 +6,14 @@ import {
   JsonSchema, JsonSchemaVersion, JsonSchemaType
 } from "@aws-cdk/aws-apigateway";
 import { IFunction } from '@aws-cdk/aws-lambda';
+import { CommonModels, ApiError } from './CommonModels';
 
 export interface CommonApiProps {
   api: RestApi,
   serviceLambda: IFunction,
   authorizer: IAuthorizer,
-  requestValidator: RequestValidator
+  requestValidator: RequestValidator,
+  models: CommonModels
 }
 
 export const createRequestTemplates = (apiName: string, authType: AuthorizationType) => {
@@ -38,10 +40,10 @@ export const CORS_PARAMETERS = {
   'method.response.header.Access-Control-Allow-Origin' : true
 };
 
-export const integrationResponseForErrorCode = (code: string) : IntegrationResponse => {
+export const integrationResponseForApiError = (err: ApiError) : IntegrationResponse => {
   return {
-    selectionPattern: `.*ErrorCode\":${code}.*`,
-    statusCode: code,
+    selectionPattern: `.*ErrorCode\":${err.statusCode}.*`,
+    statusCode: err.statusCode.toString(),
     responseTemplates: {
       'application/json': `
 #set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))
@@ -58,22 +60,22 @@ export const integrationResponseForErrorCode = (code: string) : IntegrationRespo
   }
 };
 
-export const methodResponseForErrorCode = (code: string, errorModel?: Model) : MethodResponse => {
+export const methodResponseForApiError = (err: ApiError) : MethodResponse => {
   
-  if (errorModel !== undefined) {
+  if (err.model !== undefined) {
     return {
-      statusCode: code,
+      statusCode: err.statusCode.toString(),
       responseParameters: {
         ...CORS_PARAMETERS,
         'method.response.header.x-amzn-ErrorType' : true
       },
       responseModels: {
-        'application/json': errorModel!
+        'application/json': err.model!
       }
     };
   } else {
     return {
-      statusCode: code,
+      statusCode: err.statusCode.toString(),
       responseParameters: {
         ...CORS_PARAMETERS,
         'method.response.header.x-amzn-ErrorType' : true

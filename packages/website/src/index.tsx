@@ -4,6 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css';
 import './index.css';
+import '@chessdb.biz/hercules-chess-ui/dist/index.css'
 
 ReactDOM.render(
   <React.StrictMode>

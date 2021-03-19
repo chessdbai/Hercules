@@ -18,6 +18,12 @@ export default function ContentRouter() {
           <Route path="/user/register">
             <pages.RegisterPage />
           </Route>
+          <Route path="/user/confirm">
+            <pages.ConfirmPage />
+          </Route>
+          <Route path="/user/reset">
+            <pages.ResetPasswordPage />
+          </Route>
           <Route path="/help">
             <pages.HelpPage />
           </Route>

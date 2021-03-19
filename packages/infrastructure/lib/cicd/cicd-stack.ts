@@ -143,6 +143,7 @@ export class CicdStack extends cdk.Stack {
       const stackNames = [
         'CoreStack',
         'AuthStack',
+        'StorageStack',
         'WebsiteStack',
         'ApiStack',
       ];

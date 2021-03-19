@@ -15,25 +15,22 @@ accounts.ACCOUNTS.forEach(account => {
     region: account.region
   };
   new stacks.CoreStack(app, `Core${suffix}`, {
-    env: env,
-    domainName: account.domainName,
-    stage: account.stage
+    account: account
   });
-  new stacks.AuthStack(app, `Auth${suffix}`, {
-    env: env,
-    domainName: account.domainName,
-    replyToEmail: account.replyToEmail,
-    replyToEmailArn: account.replyToEmailArn
+  const authStack = new stacks.AuthStack(app, `Auth${suffix}`, {
+    account: account
+  });
+  new stacks.AuthTestStack(app, `AuthTest${suffix}`, {
+    account: account
+  });
+  new stacks.StorageStack(app, `Storage${suffix}`, {
+    account: account
   });
   new stacks.WebsiteStack(app, `Website${suffix}`, {
-    env: env,
-    domainName: account.domainName,
-    publicZoneId: account.publicZoneId
+    account: account
   });
   new stacks.ApiStack(app, `Api${suffix}`, {
-    env: env,
-    domainName: account.domainName,
-    publicZoneId: account.publicZoneId
+    account: account
   });
 });
 

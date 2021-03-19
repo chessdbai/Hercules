@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="GetSessionRequestMarshaller.cs" company="ChessDB.AI">
+// <copyright file="PutGameRequestMarshaller.cs" company="ChessDB.AI">
 // MIT Licensed.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -10,19 +10,20 @@ namespace Hercules.Api.Client.Marshalling
     using Amazon.Runtime.Internal;
     using Amazon.Runtime.Internal.Transform;
     using Hercules.Api.Model.Admin;
+    using Hercules.Api.Model.MyChess;
     using Newtonsoft.Json;
 
     /// <summary>
     /// A request marshaller to marshall InitializeUser request objects.
     /// </summary>
-    public class GetSessionRequestMarshaller : IMarshaller<IRequest, InitializeUserRequest>, IMarshaller<IRequest, AmazonWebServiceRequest>
+    public class PutGameRequestMarshaller : IMarshaller<IRequest, PutGameRequest>, IMarshaller<IRequest, AmazonWebServiceRequest>
     {
-        private static GetSessionRequestMarshaller instance = new GetSessionRequestMarshaller();
+        private static PutGameRequestMarshaller instance = new PutGameRequestMarshaller();
 
         /// <summary>
         /// Gets the singleton.
         /// </summary>
-        public static GetSessionRequestMarshaller Instance
+        public static PutGameRequestMarshaller Instance
         {
             get
             {
@@ -37,7 +38,7 @@ namespace Hercules.Api.Client.Marshalling
         /// <returns>The internal request object.</returns>
         public IRequest Marshall(AmazonWebServiceRequest input)
         {
-            return this.Marshall((InitializeUserRequest)input);
+            return this.Marshall((PutGameRequest)input);
         }
 
         /// <summary>
@@ -45,12 +46,12 @@ namespace Hercules.Api.Client.Marshalling
         /// </summary>
         /// <param name="publicRequest">The public request.</param>
         /// <returns>The internal request object.</returns>
-        public IRequest Marshall(InitializeUserRequest publicRequest)
+        public IRequest Marshall(PutGameRequest publicRequest)
         {
             IRequest request = new DefaultRequest(publicRequest, "execute-api");
-            request.Headers["Content-Type"] = "application/json";
-            request.HttpMethod = "GET";
-            request.ResourcePath = "/health/";
+            request.Headers["Content-Type"] = "application/x-pgn-chess";
+            request.HttpMethod = "POST";
+            request.ResourcePath = "/my/games/";
             request.MarshallerVersion = 2;
             return request;
         }
@@ -59,7 +60,7 @@ namespace Hercules.Api.Client.Marshalling
         /// Gets the singleton instance of this marshaller.
         /// </summary>
         /// <returns>The singleton instance of this marshaller.</returns>
-        internal static GetSessionRequestMarshaller GetInstance()
+        internal static PutGameRequestMarshaller GetInstance()
         {
             return instance;
         }

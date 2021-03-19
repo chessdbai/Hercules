@@ -1,19 +1,26 @@
 import * as cdk from '@aws-cdk/core';
+import * as cognito from '@aws-cdk/aws-cognito';
 import { Auth } from './auth';
+import { HerculesAccount } from '../accounts';
 
-interface AuthStackProps extends cdk.StackProps {
-  domainName: string,
-  replyToEmail: string,
-  replyToEmailArn: string
+interface AuthStackProps {
+  account: HerculesAccount
 }
 
 export class AuthStack extends cdk.Stack {
+
+  readonly auth : Auth;
+
   constructor(scope: cdk.Construct, id: string, props: AuthStackProps) {
-    super(scope, id, props);
-    
+    super(scope, id, {
+      env: {
+        account: props.account.accountId,
+        region: props.account.region
+      }
+    });
+
     const auth = new Auth(this, 'Auth', {
-      replyToEmail: props.replyToEmail,
-      replyToEmailArn: props.replyToEmailArn,
+      account: props.account
     });
 
     new cdk.CfnOutput(this, 'UserPoolIdOutput', {
@@ -32,5 +39,21 @@ export class AuthStack extends cdk.Stack {
       exportName: 'IdentityPoolId',
       value: auth.identityPool.ref
     });
+
+
+    new cdk.CfnOutput(this, 'FreeUsersRoleArnOutput', {
+      exportName: 'FreeUsersRoleArn',
+      value: auth.freeUsersRole.roleArn
+    });
+    new cdk.CfnOutput(this, 'PremiumUsersRoleArnOutput', {
+      exportName: 'PremiumUsersRoleArn',
+      value: auth.premiumUsersRole.roleArn
+    });
+    new cdk.CfnOutput(this, 'StaffUsersRoleArnOutput', {
+      exportName: 'StaffUsersRoleArn',
+      value: auth.staffUsersRole.roleArn
+    });
+
+    this.auth = auth;
   }
 }

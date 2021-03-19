@@ -1,11 +1,17 @@
 import * as cdk from '@aws-cdk/core';
 import * as iam from '@aws-cdk/aws-iam';
+import * as certs from '@aws-cdk/aws-certificatemanager';
+import * as r53 from '@aws-cdk/aws-route53';
+import * as r53targets from '@aws-cdk/aws-route53-targets';
 import * as cognito from '@aws-cdk/aws-cognito';
+import * as idps from './idps';
+import * as sm from "@aws-cdk/aws-secretsmanager";
 import { Triggers } from './triggers';
+import { HerculesAccount } from '../accounts';
+import { ShimHostedZone } from '../shim-hosted-zone';
 
 export interface AuthProps {
-  replyToEmail: string,
-  replyToEmailArn: string
+  account: HerculesAccount
 }
 
 export class Auth extends cdk.Construct {
@@ -15,14 +21,21 @@ export class Auth extends cdk.Construct {
 
   readonly freeUsersPolicy: iam.ManagedPolicy;
   readonly premiumUsersPolicy: iam.ManagedPolicy;
+  readonly betaUsersPolicy: iam.ManagedPolicy;
   readonly staffUsersPolicy: iam.ManagedPolicy;
 
   readonly identityPool: cognito.CfnIdentityPool;
   readonly userPool: cognito.UserPool;
   readonly anonymousUsersRole: iam.Role;
+  readonly betaUsersRole: iam.Role;
   readonly freeUsersRole: iam.Role;
   readonly premiumUsersRole: iam.Role;
   readonly staffUsersRole: iam.Role;
+
+  readonly staffGroup : cognito.CfnUserPoolGroup;
+  readonly freeGroup : cognito.CfnUserPoolGroup;
+  readonly premiumGroup : cognito.CfnUserPoolGroup;
+  readonly betaTestersGroup : cognito.CfnUserPoolGroup;
 
   constructor(scope: cdk.Construct, id: string, props: AuthProps) {
     super(scope, id);
@@ -33,12 +46,15 @@ export class Auth extends cdk.Construct {
     });
     this.staffUsersPolicy = new iam.ManagedPolicy(this, 'StaffPolicy', {
     });
+    this.betaUsersPolicy = new iam.ManagedPolicy(this, 'BetaPolicy', {
+    });
     const policyStatement = new iam.PolicyStatement();
     policyStatement.addActions('execute-api:*');
     policyStatement.addAllResources();
     this.freeUsersPolicy.addStatements(policyStatement);
     this.premiumUsersPolicy.addStatements(policyStatement);
     this.staffUsersPolicy.addStatements(policyStatement);
+    this.betaUsersPolicy.addStatements(policyStatement);
 
     const externalId = '22f454fe-f14b-4781-9ea3-20fdb38a2d13';
 
@@ -65,31 +81,100 @@ export class Auth extends cdk.Construct {
       signInAliases: {
         username: true
       },
-      autoVerify: {
-        email: true
+      enableSmsRole: true,
+      smsRoleExternalId: externalId,
+      mfa: cognito.Mfa.OPTIONAL,
+      mfaSecondFactor: {
+        sms: true,
+        otp: true
       },
-      selfSignUpEnabled: true
-    });
-    const cfnUserPool = this.userPool.node.defaultChild as cognito.CfnUserPool;
-    cfnUserPool.mfaConfiguration = 'OPTIONAL';
-    cfnUserPool.smsConfiguration = {
-      snsCallerArn: cognitoSnsRole.roleArn,
-      externalId: externalId
-    };
-    cfnUserPool.policies = {
-        passwordPolicy: {
-            minimumLength: 8,
-            requireLowercase: false,
-            requireNumbers: false,
-            requireUppercase: false,
-            requireSymbols: false
+      accountRecovery: cognito.AccountRecovery.EMAIL_AND_PHONE_WITHOUT_MFA,
+      autoVerify: {
+        email: true,
+        phone: true
+      },
+      standardAttributes: {
+        familyName: {
+          mutable: true,
+          required: true
+        },
+        fullname: {
+          mutable: true,
+          required: true
+        },
+        givenName: {
+          mutable: true,
+          required: true
+        },
+        email: {
+          mutable: true,
+          required: true
+        },
+        locale: {
+          mutable: true,
+          required: true
+        },
+        address: {
+          mutable: true
         }
-    };
+      },
+      passwordPolicy: {
+        minLength: 8,
+        requireLowercase: true,
+        requireDigits: true,
+        requireUppercase: true,
+        requireSymbols: true
+      },
+      selfSignUpEnabled: true,
+      
+    });
+
+    const secretValue = sm.Secret.fromSecretCompleteArn(this, "ImportedSecret", props.account.twitchAuthSecretArn);
+    
+    const clientId = secretValue.secretValueFromJson('clientId').toString();
+    const clientSecret = secretValue.secretValueFromJson('clientSecret').toString();
+
+    new idps.TwitchIdp(this, 'Twitch', {
+      clientId: clientId,
+      clientSecret: clientSecret,
+      scopes: ['openid', 'user:read:email'],
+      userPool: this.userPool,
+    });
+
+    const authCert = certs.Certificate.fromCertificateArn(this, 'AuthCert', cdk.Fn.importValue('AuthCertArn'));
+    const userPoolDomain = this.userPool.addDomain('AuthDomain', {
+      customDomain: {
+        domainName: `userauth.${props.account.domainName}`,
+        certificate: authCert
+      }
+    });
+
+    const publicZone = new ShimHostedZone(this, 'PublicZone', {
+      hostedZoneId: props.account.publicZoneId,
+      zoneName: props.account.domainName
+    });
+    new r53.ARecord(this, 'AuthDnsRecord', {
+      target: r53.RecordTarget.fromAlias(new r53targets.UserPoolDomainTarget(userPoolDomain)),
+      zone: publicZone,
+      recordName: 'userauth'
+    });
+
+    const cfnUserPool = this.userPool.node.defaultChild as cognito.CfnUserPool;
     cfnUserPool.emailConfiguration = {
       emailSendingAccount: 'DEVELOPER',
-      replyToEmailAddress: props.replyToEmail,
-      sourceArn: props.replyToEmailArn
+      replyToEmailAddress: props.account.replyToEmail,
+      sourceArn: props.account.replyToEmailArn,
     };
+    (cfnUserPool.schema as cognito.CfnUserPool.SchemaAttributeProperty[]).push({
+      developerOnlyAttribute: true,
+      attributeDataType: 'String',
+      mutable: true,
+      name: 'databaseId',
+      stringAttributeConstraints: {
+        minLength: '36',
+        maxLength: '36'
+      }
+    })
     cfnUserPool.addPropertyOverride('EnabledMfas', ['SMS_MFA']);
     this.client = new cognito.UserPoolClient(this, 'WebsiteClient', {
         generateSecret: false,
@@ -98,7 +183,6 @@ export class Auth extends cdk.Construct {
         authFlows: {
           userPassword: true,
           adminUserPassword: true,
-          refreshToken: true,
           userSrp: true
         }
     });
@@ -107,6 +191,7 @@ export class Auth extends cdk.Construct {
         cognitoIdentityProviders: [{
             clientId: this.client.userPoolClientId,
             providerName: this.userPool.userPoolProviderName,
+            
         }],
         developerProviderName: 'ChessDB'
     });
@@ -158,6 +243,12 @@ export class Auth extends cdk.Construct {
         assumedBy: cognitoAuthenticatedPrincipal,
         managedPolicies: [
           this.freeUsersPolicy,
+        ]
+    });
+    const betaUsersRole = new iam.Role(this, 'BetaUsersAuthenticatedRole', {
+        assumedBy: cognitoAuthenticatedPrincipal,
+        managedPolicies: [
+          this.freeUsersPolicy,
           this.premiumUsersPolicy,
           this.staffUsersPolicy  
         ]
@@ -173,7 +264,17 @@ export class Auth extends cdk.Construct {
     freeUsersRole.addToPolicy(cognitoPolicy);
     premiumUsersRole.addToPolicy(cognitoPolicy);
     staffUsersRole.addToPolicy(cognitoPolicy);
+    betaUsersRole.addToPolicy(cognitoPolicy);
 
+    const mapping = new cdk.CfnJson(this, 'Mapping', {
+      value: {
+        [`cognito-idp.${cdk.Aws.REGION}.amazonaws.com/${this.userPool.userPoolId}:${this.client.userPoolClientId}`]: {
+          ambiguousRoleResolution: 'Deny',
+          type: 'Token'
+        }
+      }
+    });
+    
     new cognito.CfnIdentityPoolRoleAttachment(this, 'DefaultValid', {
       identityPoolId: identityPool.ref,
       roles: {
@@ -182,17 +283,22 @@ export class Auth extends cdk.Construct {
       }
     });
 
-    new cognito.CfnUserPoolGroup(this, 'FreeUsersGroup', {
+    this.freeGroup = new cognito.CfnUserPoolGroup(this, 'FreeUsersGroup', {
       groupName: 'FreeUsers',
       roleArn: freeUsersRole.roleArn,
       userPoolId: this.userPool.userPoolId
     });
-    new cognito.CfnUserPoolGroup(this, 'PremiumUsersGroup', {
+    this.premiumGroup = new cognito.CfnUserPoolGroup(this, 'PremiumUsersGroup', {
       groupName: 'PremiumUsers',
       roleArn: premiumUsersRole.roleArn,
       userPoolId: this.userPool.userPoolId
     });
-    new cognito.CfnUserPoolGroup(this, 'StaffUsersGroup', {
+    this.betaTestersGroup = new cognito.CfnUserPoolGroup(this, 'BetaTestersGroup', {
+      groupName: 'BetaTesters',
+      roleArn: betaUsersRole.roleArn,
+      userPoolId: this.userPool.userPoolId
+    });
+    this.staffGroup = new cognito.CfnUserPoolGroup(this, 'StaffUsersGroup', {
       groupName: 'StaffUsers',
       roleArn: staffUsersRole.roleArn,
       userPoolId: this.userPool.userPoolId

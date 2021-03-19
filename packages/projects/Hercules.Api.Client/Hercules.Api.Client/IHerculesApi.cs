@@ -10,6 +10,7 @@ namespace Hercules.Api.Client
     using Hercules.Api.Model.Admin;
     using Hercules.Api.Model.Database;
     using Hercules.Api.Model.Health;
+    using Hercules.Api.Model.MyChess;
 
     /// <summary>
     /// The required methods to implement a Hercules API client.
@@ -36,5 +37,12 @@ namespace Hercules.Api.Client
         /// <param name="request">The <see cref="NaturalSearchRequest"/> request object.</param>
         /// <returns>An awaitable task with the response.</returns>
         Task<NaturalSearchResponse> NaturalSearchAsync(NaturalSearchRequest request);
+
+        /// <summary>
+        /// Makes a request to the Hercules API to put a game into the user's personal database.
+        /// </summary>
+        /// <param name="request">The <see cref="PutGameRequest"/> request object.</param>
+        /// <returns>An awaitable task with the response.</returns>
+        Task<PutGameResponse> PutGameAsync(PutGameRequest request);
     }
 }

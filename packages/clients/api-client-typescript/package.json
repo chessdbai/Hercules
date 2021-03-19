@@ -6,10 +6,10 @@
   "author": "John Davis <john@chessdb.biz>",
   "license": "MIT",
   "dependencies": {
+    "@chessdb.ai/aws-api-client-core": "file:../aws-api-client-core/",
     "@lifeomic/attempt": "^3.0.0",
     "aws-sdk": "^2.601.0",
-    "axios": "^0.19.1",
-    "@chessdb.ai/aws-api-client-core": "file:../aws-api-client-core/"
+    "axios": "^0.19.1"
   },
   "scripts": {
     "test": "jest --runInBand",

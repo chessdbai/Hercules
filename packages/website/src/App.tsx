@@ -4,7 +4,7 @@ import AppSideMenu from './pages/database/DatabaseSideMenu';
 import AppTopMenu from './AppTopMenu';
 import ContentRouter from './ContentRouter';
 import {
-  BrowserRouter as Router
+  HashRouter as Router
 } from "react-router-dom";
 import "./config/auth-config";
 

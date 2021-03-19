@@ -97,7 +97,7 @@ namespace Hercules.Api
             {
                 ErrorCode = (int)studyException.StatusCode,
                 ErrorMessage = studyException.Message,
-                ErrorType = studyException!.GetType() !.Name!,
+                ErrorType = studyException!.GetType()!.Name!,
             };
             var wrappedException = new Exception(JsonConvert.SerializeObject(errorInfo));
             Console.WriteLine(studyException);

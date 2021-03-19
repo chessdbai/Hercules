@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hercules.Triggers", "packag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hercules.Triggers.Tests", "packages\triggers\test\Hercules.Triggers.Tests\Hercules.Triggers.Tests.csproj", "{E0AC75D8-B474-4FD4-BC77-F9C12812B453}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driver", "Driver", "{C922316E-3077-42EE-916A-EFFD5E6B98E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="NaturalSearchResponseUnmarshaller.cs" company="ChessDB.AI">
+// <copyright file="PutGameResponseUnmarshaller.cs" company="ChessDB.AI">
 // MIT Licensed.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -18,14 +18,14 @@ namespace Hercules.Api.Client.Marshalling
     /// <summary>
     /// A response unmarshaller to convert the server response to an InitializeUser response object.
     /// </summary>
-    public class NaturalSearchResponseUnmarshaller : JsonResponseUnmarshaller
+    public class PutGameResponseUnmarshaller : JsonResponseUnmarshaller
     {
-        private static NaturalSearchResponseUnmarshaller instance = new NaturalSearchResponseUnmarshaller();
+        private static PutGameResponseUnmarshaller instance = new PutGameResponseUnmarshaller();
 
         /// <summary>
         /// Gets the singleton.
         /// </summary>
-        public static NaturalSearchResponseUnmarshaller Instance
+        public static PutGameResponseUnmarshaller Instance
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Hercules.Api.Client.Marshalling
         /// Gets the singleton instance of the unmarshaller.
         /// </summary>
         /// <returns>The singleton instance.</returns>
-        internal static NaturalSearchResponseUnmarshaller GetInstance()
+        internal static PutGameResponseUnmarshaller GetInstance()
         {
             return instance;
         }

@@ -12,6 +12,7 @@ namespace Hercules.Api.Actions
     using Hercules.Api.Actions.Admin;
     using Hercules.Api.Actions.Database;
     using Hercules.Api.Actions.Health;
+    using Hercules.Api.Actions.MyChess;
     using Hercules.Api.Clients;
     using Hercules.Api.Model.Runtime;
     using Newtonsoft.Json;
@@ -30,6 +31,7 @@ namespace Hercules.Api.Actions
             Handlers.Add("GetSession", new HandlerDelegate(typeof(GetSessionAction)));
             Handlers.Add("InitializeUser", new HandlerDelegate(typeof(InitializeUserAction)));
             Handlers.Add("NaturalSearch", new HandlerDelegate(typeof(NaturalSearchAction)));
+            Handlers.Add("PutGame", new HandlerDelegate(typeof(PutGameAction)));
             ClientCollection = new ClientCollection();
         }
 

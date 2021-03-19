@@ -71,19 +71,26 @@ export class ApiEndpoint extends Construct {
       api: api
     }).authorizer;
 
+    const sharedModels = new apis.CommonModels(this, 'CommonModles', {
+      api: api
+    });
     const apiProps : apis.CommonApiProps = {
       api: api,
       authorizer: authorizer,
       serviceLambda: props.serviceLambda,
-      requestValidator: requestValidator
+      requestValidator: requestValidator,
+      models: sharedModels
     };
+
 
     const healthApis = new apis.HealthApis(this, 'Health', apiProps);
     const adminApis = new apis.AdminApis(this, 'Admin', apiProps);
+    const myApis = new apis.MyApis(this, 'My', apiProps);
 
     this.methods = [
       ...healthApis.methods,
-      ...adminApis.methods
+      ...adminApis.methods,
+      ...myApis.methods,
     ];
   }
 }

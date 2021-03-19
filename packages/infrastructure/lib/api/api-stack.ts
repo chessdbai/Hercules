@@ -3,10 +3,11 @@ import * as certs from '@aws-cdk/aws-certificatemanager';
 import { ApiLambda } from './api-lambda';
 import { ApiEndpoint } from './api-endpoint';
 import { ShimHostedZone } from '../shim-hosted-zone';
+import { HerculesAccount } from '../accounts';
+
 
 interface ApiStackProps extends cdk.StackProps {
-  domainName: string,
-  publicZoneId: string
+  account: HerculesAccount
 }
 
 export class ApiStack extends cdk.Stack {
@@ -23,14 +24,14 @@ export class ApiStack extends cdk.Stack {
     });
     
     const publicZone = new ShimHostedZone(this, 'PublicZone', {
-      hostedZoneId: props.publicZoneId,
-      zoneName: props.domainName
+      hostedZoneId: props.account.publicZoneId,
+      zoneName: props.account.domainName
     });
     const apiCertArn = cdk.Fn.importValue('ApiCertArn');
     const apiCert = certs.Certificate.fromCertificateArn(this, 'ApiCert', apiCertArn); 
     new ApiEndpoint(this, 'Api', {
       serviceLambda: serviceLambda.apiLambda,
-      domainName: 'api.' + props.domainName,
+      domainName: 'api.' + props.account.domainName,
       userPoolArn: userPoolArn,
       certificate: apiCert,
       hostedZone: publicZone
