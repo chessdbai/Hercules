@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent } from 'react';
-import { Auth } from 'aws-amplify';
+import Amplify, { Auth } from 'aws-amplify';
 import {
   Form, Input,
   Button, Checkbox,
@@ -136,6 +136,26 @@ export default function LoginPage() {
             <div {...formItemLayout}>
               <Link to='/user/reset'>Recover your Password?</Link> or <Link to='/user/register'>Register now!</Link>
             </div>
+          </Form.Item>
+          <Form.Item {...tailLayout}>
+            <Button
+                className="login-form-button"
+                type='ghost'
+                onClick={(e) => Auth.federatedSignIn({ customProvider: 'Twitch'})}>
+              Login With Twitch
+            </Button>
+            <Button
+                className="login-form-button"
+                type='ghost'
+                onClick={(e) => Auth.federatedSignIn({ customProvider: 'Discord'})}>
+              Login With Discord
+            </Button>
+            <Button
+                className="login-form-button"
+                type='ghost'
+                onClick={(e) => Auth.federatedSignIn({ customProvider: 'Lichess'})}>
+              Login With Lichess
+            </Button>
           </Form.Item>
         </Form>
       </Layout>

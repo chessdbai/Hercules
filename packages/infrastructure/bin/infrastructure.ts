@@ -23,9 +23,6 @@ accounts.ACCOUNTS.forEach(account => {
   new stacks.AuthTestStack(app, `AuthTest${suffix}`, {
     account: account
   });
-  new stacks.StorageStack(app, `Storage${suffix}`, {
-    account: account
-  });
   new stacks.WebsiteStack(app, `Website${suffix}`, {
     account: account
   });

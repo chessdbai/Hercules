@@ -15,10 +15,13 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" />
     <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <PackageReference Include="ChessDB.Eunomia" Version="2.0.0" />
+    <PackageReference Include="ChessDB.Eunomia.Storage" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\projects\Hercules.Api.Model\Hercules.Api.Model\Hercules.Api.Model.csproj" />
-    <EmbeddedResource Include="Database\Queries\skeleton.sql" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@ import {
   Cascader, DatePicker, InputNumber,
   Typography, TreeSelect, Switch, Space
 } from 'antd';
+import { EditorPopup } from '@chessdb.biz/hercules-chess-ui';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 
@@ -621,6 +622,8 @@ export default function GamesExplorer() {
           </>
         )}
       </Form.List>
+
+      <EditorPopup />
       
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">

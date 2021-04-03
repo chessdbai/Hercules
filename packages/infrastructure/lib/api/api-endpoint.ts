@@ -84,13 +84,9 @@ export class ApiEndpoint extends Construct {
 
 
     const healthApis = new apis.HealthApis(this, 'Health', apiProps);
-    const adminApis = new apis.AdminApis(this, 'Admin', apiProps);
-    const myApis = new apis.MyApis(this, 'My', apiProps);
-
+    
     this.methods = [
       ...healthApis.methods,
-      ...adminApis.methods,
-      ...myApis.methods,
     ];
   }
 }

@@ -13,6 +13,12 @@ const deployAccount = AccountManager.getAccounts({
   tag: 'Deployment'
 })[0] as ZeusCorpAccount;
 
+interface AuthSecrets {
+  twitch: string,
+  discord: string,
+  lichess: string
+}
+
 export interface HerculesAccount {
   accountId: string,
   region: string,
@@ -25,7 +31,7 @@ export interface HerculesAccount {
   ipv4Space: string,
   ipv6Space: string,
   vpcId: string,
-  twitchAuthSecretArn: string
+  authConfig: AuthSecrets
 }
 
 const HerculesBeta : HerculesAccount = {
@@ -40,7 +46,11 @@ const HerculesBeta : HerculesAccount = {
   ipv4Space: betaAccount.topology.ipv4Space,
   ipv6Space: betaAccount.topology.ipv6Space,
   vpcId: betaAccount.topology.vpcId,
-  twitchAuthSecretArn: 'arn:aws:secretsmanager:us-east-2:996734812344:secret:beta/Hercules/TwitchAuth-qSTb0j'
+  authConfig: {
+    twitch: 'arn:aws:secretsmanager:us-east-2:996734812344:secret:beta/Hercules/TwitchAuth-qSTb0j',
+    discord: 'arn:aws:secretsmanager:us-east-2:996734812344:secret:prod/hercules/DiscordAuth-SpLbEZ',
+    lichess: 'arn:aws:secretsmanager:us-east-2:996734812344:secret:prod/hercules/Lichess-DsNydr'
+  }
 };
 
 const HerculesProd : HerculesAccount = {
@@ -55,7 +65,11 @@ const HerculesProd : HerculesAccount = {
   ipv4Space: prodAccount.topology.ipv4Space,
   ipv6Space: prodAccount.topology.ipv6Space,
   vpcId: prodAccount.topology.vpcId,
-  twitchAuthSecretArn: 'arn:aws:secretsmanager:us-east-2:541249553451:secret:prod/Hercules/TwitchAuth-qSTb0j'
+  authConfig: {
+    twitch: 'arn:aws:secretsmanager:us-east-2:541249553451:secret:prod/hercules/TwitchAuth-y5xd66',
+    discord: 'arn:aws:secretsmanager:us-east-2:541249553451:secret:prod/hercules/DiscordAuth-SpLbEZ',
+    lichess: 'arn:aws:secretsmanager:us-east-2:541249553451:secret:prod/hercules/LichessAuth-tM5iiu'
+  }
 };
 
 const DeployAccountEnv : cdk.Environment = {

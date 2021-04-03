@@ -3,10 +3,9 @@ import pkg from './package.json'
 import url from 'postcss-url';
 import postcss from 'rollup-plugin-postcss';
 import inlineSvg from 'rollup-plugin-inline-svg';
- 
 
 export default {
-  input: 'src/index.ts',
+  input: 'src/index.tsx',
   output: [
     {
       file: pkg.main,
@@ -62,6 +61,6 @@ export default {
     }),
     typescript({
       typescript: require('typescript'),
-    }),
+    })
   ]
 }

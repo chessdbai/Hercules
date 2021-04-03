@@ -112,7 +112,6 @@ const RegistrationForm  : React.FC<RegistrationFormProps> = (p: RegistrationForm
         onFinish={onFinish}
         scrollToFirstError
       >
-
         <Form.Item  
           name="username"
           label="Username"

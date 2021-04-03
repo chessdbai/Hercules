@@ -95,68 +95,104 @@ export class Auth extends cdk.Construct {
       },
       standardAttributes: {
         familyName: {
-          mutable: true,
-          required: true
+          mutable: true
         },
         fullname: {
+          mutable: true
+        },
+        middleName: {
           mutable: true,
-          required: true
+        },
+        phoneNumber: {
+          mutable: true,
         },
         givenName: {
-          mutable: true,
-          required: true
+          mutable: true
         },
         email: {
-          mutable: true,
-          required: true
+          mutable: true
         },
         locale: {
-          mutable: true,
-          required: true
+          mutable: true
         },
         address: {
           mutable: true
+        },
+        timezone: {
+          mutable: true
         }
+      },
+      customAttributes: {
+        'twitch_username': new cognito.StringAttribute({
+          mutable: true
+        }),
+        'chesscom_username': new cognito.StringAttribute({
+          mutable: true
+        }),
+        'discord_username': new cognito.StringAttribute({
+          mutable: true
+        }),
+        'lichess_username': new cognito.StringAttribute({
+          mutable: true
+        }),
       },
       passwordPolicy: {
         minLength: 8,
         requireLowercase: true,
         requireDigits: true,
         requireUppercase: true,
-        requireSymbols: true
+        requireSymbols: false
       },
       selfSignUpEnabled: true,
       
     });
 
-    const secretValue = sm.Secret.fromSecretCompleteArn(this, "ImportedSecret", props.account.twitchAuthSecretArn);
-    
-    const clientId = secretValue.secretValueFromJson('clientId').toString();
-    const clientSecret = secretValue.secretValueFromJson('clientSecret').toString();
-
-    new idps.TwitchIdp(this, 'Twitch', {
-      clientId: clientId,
-      clientSecret: clientSecret,
+    const twitchIdp = new idps.TwitchIdp(this, 'Twitch', {
+      secret: sm.Secret.fromSecretCompleteArn(this, "TwitchAuthSecret", props.account.authConfig.twitch),
       scopes: ['openid', 'user:read:email'],
       userPool: this.userPool,
     });
+    this.userPool.registerIdentityProvider(twitchIdp);
 
-    const authCert = certs.Certificate.fromCertificateArn(this, 'AuthCert', cdk.Fn.importValue('AuthCertArn'));
-    const userPoolDomain = this.userPool.addDomain('AuthDomain', {
-      customDomain: {
-        domainName: `userauth.${props.account.domainName}`,
-        certificate: authCert
-      }
+
+    const discordIdp = new idps.DiscordIdp(this, 'Discord', {
+      secret: sm.Secret.fromSecretCompleteArn(this, "DiscordAuthSecret", props.account.authConfig.discord),
+      scopes: ['openid', 'email', 'identify'],
+      userPool: this.userPool,
     });
+    this.userPool.registerIdentityProvider(discordIdp);
+
+
+    const lichessIdp = new idps.LichessIdp(this, 'Lichess', {
+      secret: sm.Secret.fromSecretCompleteArn(this, "LichessAuthSecret", props.account.authConfig.lichess),
+      scopes: ['openid', 'email:read'],
+      userPool: this.userPool,
+    });
+    this.userPool.registerIdentityProvider(lichessIdp);
+
 
     const publicZone = new ShimHostedZone(this, 'PublicZone', {
       hostedZoneId: props.account.publicZoneId,
       zoneName: props.account.domainName
     });
+    const authDomainName = `oauth.${props.account.domainName}`;
+    //const authCert = certs.Certificate.fromCertificateArn(this, 'AuthCert', cdk.Fn.importValue('AuthCertArn'));
+    const authCert = new certs.DnsValidatedCertificate(this, 'AuthCert', {
+      domainName: authDomainName,
+      hostedZone: publicZone,
+      region: 'us-east-1'
+    });
+    const userPoolDomain = this.userPool.addDomain('AuthDomain', {
+      customDomain: {
+        domainName: authDomainName,
+        certificate: authCert
+      }
+    });
+
     new r53.ARecord(this, 'AuthDnsRecord', {
       target: r53.RecordTarget.fromAlias(new r53targets.UserPoolDomainTarget(userPoolDomain)),
       zone: publicZone,
-      recordName: 'userauth'
+      recordName: 'oauth'
     });
 
     const cfnUserPool = this.userPool.node.defaultChild as cognito.CfnUserPool;

@@ -11,10 +11,14 @@
     <PackageVersion Include="AWSSDK.CognitoIdentityProvider" Version="3.5.1.36" />
     <PackageVersion Include="AWSSDK.Core" Version="3.5.3.8" />
     <PackageVersion Include="AWSSDK.SecurityToken" Version="3.5.1.59" />
+    <PackageVersion Include="ChessDB.Eunomia" Version="2.0.0" />
+    <PackageVersion Include="ChessDB.Eunomia.Storage" Version="2.0.0" />
     <PackageVersion Include="Elasticsearch.Net.Aws" Version="7.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.7" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="3.1.7" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.4" />
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.333" />
   </ItemGroup>
 

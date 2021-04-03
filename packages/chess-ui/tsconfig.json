@@ -12,16 +12,20 @@
       "allowSyntheticDefaultImports": true,
       "forceConsistentCasingInFileNames": true,
       "noFallthroughCasesInSwitch": true,
-      "module": "esnext",
       "outDir": "./dist",
       "declaration": true,
       "declarationDir": "./dist",
       "strict": true,
       "sourceMap": true,
+      "module": "esnext",
       "moduleResolution": "node",
       "esModuleInterop": true,
+      "importHelpers": true,
       "typeRoots": [
           "node_modules/@types"
+      ],
+      "types": [
+        "node"
       ]
   },
   "include": [
@@ -34,5 +38,7 @@
   "files": [
     "./typings/react-chessground.d.ts",
     "./typings/svgs.d.ts",
+    "./typings/lichess-common.d.ts",
+    "./typings/lichess-cash.d.ts",
   ]
 }

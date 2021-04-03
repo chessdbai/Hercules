@@ -14,6 +14,7 @@ namespace Hercules.Api.Database
     using System.Threading.Tasks;
     using Amazon.Athena;
     using Amazon.Athena.Model;
+    using Hercules.Api.Database.Queries;
     using Hercules.Api.Model.Database;
     using Microsoft.Extensions.Logging;
 
@@ -43,8 +44,35 @@ namespace Hercules.Api.Database
         }
 
         /// <inheritdoc cref="ISkeletonSearchClient"/>
-        public async Task<List<SkeletonSearchResult>> SearchAsync(string fuzzyFen, CancellationToken token = default(CancellationToken))
+        public async Task<List<SkeletonSearchResult>> SearchAsync(SkeletonSearchRequest request, CancellationToken token = default(CancellationToken))
         {
+            var builder = new QueryBuilder();
+            builder.WithFuzzyFen(request.FuzzyFen);
+            if (!string.IsNullOrEmpty(request.Result))
+            {
+                builder.WithResult(request.Result);
+            }
+
+            if (!string.IsNullOrEmpty(request.ECO))
+            {
+                builder.WithResult(request.ECO);
+            }
+
+            if (request.RatingLowerBound != null)
+            {
+                builder.WithRatingLowerBound(request.RatingLowerBound.Value);
+            }
+
+            if (request.NextMoves != null && request.NextMoves.Count > 0)
+            {
+                builder.WithNextMoves(request.NextMoves.ToArray());
+            }
+
+            if (request.PreviousMoves != null && request.PreviousMoves.Count > 0)
+            {
+                builder.WithPrevMoves(request.PreviousMoves.ToArray());
+            }
+
             var req = new StartQueryExecutionRequest()
             {
                 QueryExecutionContext = new QueryExecutionContext()
@@ -52,7 +80,7 @@ namespace Hercules.Api.Database
                     Catalog = this.queryConfig.Catalog,
                     Database = this.queryConfig.Database,
                 },
-                QueryString = CreateQueryForTableName(this.queryConfig.Database, this.queryConfig.Table),
+                QueryString = builder.BuildSqlQuery(),
                 WorkGroup = this.queryConfig.Workgroup,
             };
 
@@ -97,19 +125,6 @@ namespace Hercules.Api.Database
                     {
                     })
                 .ToList();
-        }
-
-        private static string CreateQueryForTableName(string database, string tableName)
-        {
-            var myType = typeof(AthenaSkeletonSearchClient);
-            var myNs = myType.Namespace;
-            var fullPath = $"{myNs}.Queries.skeleton.sql";
-            using var stream = myType.Assembly.GetManifestResourceStream(fullPath);
-            using var reader = new StreamReader(stream!);
-            string query = reader.ReadToEnd();
-            return query
-                .Replace("%tablename%", tableName)
-                .Replace("%database%", database);
         }
     }
 }

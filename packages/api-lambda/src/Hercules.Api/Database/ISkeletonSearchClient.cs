@@ -19,9 +19,9 @@ namespace Hercules.Api.Database
         /// <summary>
         /// Do a fuzzy FEN string search.
         /// </summary>
-        /// <param name="fuzzyFen">The fuzzy fen.</param>
+        /// <param name="request">The fuzzy fen.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns>The list of results.</returns>
-        Task<List<SkeletonSearchResult>> SearchAsync(string fuzzyFen, CancellationToken token = default(CancellationToken));
+        Task<List<SkeletonSearchResult>> SearchAsync(SkeletonSearchRequest request, CancellationToken token = default(CancellationToken));
     }
 }

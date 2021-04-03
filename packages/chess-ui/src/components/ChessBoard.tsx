@@ -134,13 +134,13 @@ export class FixedChessBoard extends Component<ChessBoardProps&SizeMeProps,Chess
           cueShapes.push({
             orig: shape.orig as string,
             dest: shape.dest as string,
-            brush: shape.brush,
+            brush: shape.brush!,
             auto: false
           });
         } else {
           highlights.push({
             square: shape.orig as string,
-            brush: shape.brush
+            brush: shape.brush!
           });
         }
       });
@@ -152,7 +152,7 @@ export class FixedChessBoard extends Component<ChessBoardProps&SizeMeProps,Chess
           cueShapes.push({
             orig: shape.orig as string,
             dest: shape.dest as string,
-            brush: shape.brush,
+            brush: shape.brush!,
             auto: true
           });
         }

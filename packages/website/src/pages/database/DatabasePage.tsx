@@ -6,7 +6,7 @@ import {
 import { useHistory, Route } from "react-router-dom";
 import DatabaseSideMenu from './DatabaseSideMenu';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch
 } from "react-router-dom";
 import SearchPage from './SearchPage';

@@ -1,10 +1,11 @@
 module.exports = {
-	preset: 'jest-puppeteer',
 	testMatch: [ "<rootDir>/integ/**/*.spec.ts?(x)" ],
 	testPathIgnorePatterns: ['/node_modules/', 'dist'], // 
 	setupFilesAfterEnv: ['<rootDir>/config/jest.setup.ts'],
 	transform: {
 		"^.+\\.ts?$": "babel-jest"
 	},
-	globalSetup: './config/jest.global-setup.ts'
+	globalSetup: '<rootDir>/config/jest.global-setup.ts',
+	globalTeardown: '<rootDir>/config/jest_teardown.ts',
+  testEnvironment: '<rootDir>/config/puppeteer_environment.ts',
 };

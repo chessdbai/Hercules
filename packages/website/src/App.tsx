@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, CSSProperties } from 'react';
 import { Layout, Breadcrumb, Menu } from 'antd';
 import AppSideMenu from './pages/database/DatabaseSideMenu';
 import AppTopMenu from './AppTopMenu';
@@ -11,10 +11,20 @@ import "./config/auth-config";
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
+
+const layoutStyle : CSSProperties = {
+  width: '100%',
+  height: '100%',
+  minWidth: '100%',
+  minHeight: '100%',
+  overflow: 'hidden'
+}
+
+
 const App: FC = () => {
 
   return (
-    <Layout style={{height: '100%', width: '100%'}}>
+    <Layout style={layoutStyle}>
       <Router>
         <Header className="header">
           <div className="logo" />

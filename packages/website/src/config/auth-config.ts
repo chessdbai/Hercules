@@ -17,6 +17,13 @@ Amplify.configure({
           sameSite: "strict",
           secure: true
       },
-      authenticationFlowType: 'USER_PASSWORD_AUTH',
+      // OPTIONAL - Hosted UI configuration
+      oauth: {
+        domain: 'oauth.chessdb.ai',
+        scope: ['email', 'openid', 'profile', 'aws.cognito.signin.user.admin'],
+        redirectSignIn: 'https://chessdb.ai',
+        redirectSignOut: 'https://chessdb.ai',
+        responseType: 'code' 
+      }
   }
 });

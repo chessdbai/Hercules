@@ -19,6 +19,6 @@ namespace Hercules.Api.Model.Database
         /// <summary>
         /// Gets or sets the move format (UCI/SAN).
         /// </summary>
-        public string MoveFormat { get; set; }
+        public MoveFormat MoveFormat { get; set; }
     }
 }
